@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const proyectos = [
+  {
+    titulo: "Difusión en redes sociales",
+    categoria: "Comunicación",
+    descripcion: "Compartimos información basada en evidencia sobre la adolescencia para derribar mitos comunes en el público peruano.",
+    estado: "Activo"
+  },
+  {
+    titulo: "Intervenciones en colegios",
+    categoria: "Educación",
+    descripcion: "Proyectos sociales en instituciones educativas escolares para promover el conocimiento sobre la adolescencia.",
+    estado: "Activo"
+  },
+  {
+    titulo: "Intervenciones en universidades",
+    categoria: "Educación",
+    descripcion: "Talleres y charlas en universidades para concientizar sobre los derechos y realidades de los adolescentes.",
+    estado: "Activo"
+  },
+  {
+    titulo: "Defensa de derechos humanos",
+    categoria: "Derechos",
+    descripcion: "Acciones concretas en defensa de los derechos humanos de los adolescentes peruanos.",
+    estado: "Continuo"
+  },
+];
+---
+
+<Layout title="Proyectos">
+
+  <section class="hero-pagina">
+    <div class="contenedor">
+      <h1>Nuestros Proyectos</h1>
+      <p>Conoce las iniciativas que estamos llevando a cabo</p>
+    </div>
+  </section>
+
+  <section class="proyectos">
+    <div class="contenedor">
+      <div class="grid-proyectos">
+        {proyectos.map((p) => (
+          <div class="card">
+            <div class="card-header">
+              <span class="categoria">{p.categoria}</span>
+              <span class={`estado ${p.estado.toLowerCase()}`}>{p.estado}</span>
+            </div>
+            <h3>{p.titulo}</h3>
+            <p>{p.descripcion}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .hero-pagina {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+    padding: 4rem 2rem;
+  }
+
+  .hero-pagina h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-pagina p {
+    color: var(--beige);
+    font-size: 1.1rem;
+  }
+
+  .contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .proyectos {
+    padding: 5rem 2rem;
+  }
+
+  .grid-proyectos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .card {
+    border: 2px solid var(--beige);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    border-color: var(--azul-teal);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .categoria {
+    background-color: var(--azul-teal);
+    color: var(--blanco);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
+
+  .estado {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+  }
+
+  .estado.activo {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .estado.continuo {
+    background-color: #fff3e0;
+    color: #e65100;
+  }
+
+  .card h3 {
+    color: var(--azul-oscuro);
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+  }
+
+  .card p {
+    color: #555;
+    line-height: 1.6;
+  }
+</style>

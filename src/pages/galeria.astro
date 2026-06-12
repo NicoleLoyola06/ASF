@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const fotos = [
+  { titulo: "Intervención en colegio", categoria: "Proyectos" },
+  { titulo: "Foro universitario", categoria: "Eventos" },
+  { titulo: "Equipo ASF", categoria: "Nosotros" },
+  { titulo: "Taller de derechos", categoria: "Proyectos" },
+  { titulo: "Reunión de equipo", categoria: "Nosotros" },
+  { titulo: "Campaña en redes", categoria: "Comunicación" },
+];
+---
+
+<Layout title="Galería">
+
+  <section class="hero-pagina">
+    <div class="contenedor">
+      <h1>Galería</h1>
+      <p>Fotos y videos de nuestras actividades</p>
+    </div>
+  </section>
+
+  <section class="galeria">
+    <div class="contenedor">
+
+      <div class="aviso">
+        📸 Próximamente agregaremos fotos reales de nuestras actividades
+      </div>
+
+      <div class="grid-galeria">
+        {fotos.map((f) => (
+          <div class="card-foto">
+            <div class="foto-placeholder">
+              <span class="icono-foto">🖼️</span>
+            </div>
+            <div class="foto-info">
+              <span class="categoria">{f.categoria}</span>
+              <p>{f.titulo}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .hero-pagina {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+    padding: 4rem 2rem;
+  }
+
+  .hero-pagina h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-pagina p {
+    color: var(--beige);
+    font-size: 1.1rem;
+  }
+
+  .contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .galeria {
+    padding: 5rem 2rem;
+  }
+
+  .aviso {
+    background-color: var(--beige);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 3rem;
+    color: var(--azul-oscuro);
+    font-weight: 600;
+  }
+
+  .grid-galeria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .card-foto {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--beige);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .card-foto:hover {
+    border-color: var(--azul-teal);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .foto-placeholder {
+    background-color: var(--beige);
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icono-foto {
+    font-size: 3rem;
+  }
+
+  .foto-info {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .categoria {
+    background-color: var(--azul-teal);
+    color: var(--blanco);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+  }
+
+  .foto-info p {
+    color: var(--azul-oscuro);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+</style>

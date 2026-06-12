@@ -1,0 +1,161 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const articulos = [
+  {
+    titulo: "Mitos sobre la adolescencia que debemos dejar atrás",
+    categoria: "Investigación",
+    fecha: "Junio 2025",
+    resumen: "Un análisis de los mitos más comunes sobre los adolescentes peruanos y qué dice la evidencia científica al respecto.",
+    autor: "Equipo ASF"
+  },
+  {
+    titulo: "Derechos de los adolescentes en el Perú",
+    categoria: "Derechos",
+    fecha: "Mayo 2025",
+    resumen: "Revisión del marco legal que protege a los adolescentes peruanos y los desafíos que aún persisten.",
+    autor: "Equipo ASF"
+  },
+  {
+    titulo: "Salud mental en la adolescencia",
+    categoria: "Salud",
+    fecha: "Abril 2025",
+    resumen: "La importancia de hablar abiertamente sobre salud mental durante la etapa adolescente y cómo podemos apoyar a los jóvenes.",
+    autor: "Equipo ASF"
+  },
+];
+---
+
+<Layout title="Artículos">
+
+  <section class="hero-pagina">
+    <div class="contenedor">
+      <h1>Artículos</h1>
+      <p>Publicaciones e investigaciones de nuestra agrupación</p>
+    </div>
+  </section>
+
+  <section class="articulos">
+    <div class="contenedor">
+      <div class="grid-articulos">
+        {articulos.map((a) => (
+          <div class="card-articulo">
+            <div class="card-meta">
+              <span class="categoria">{a.categoria}</span>
+              <span class="fecha">{a.fecha}</span>
+            </div>
+            <h3>{a.titulo}</h3>
+            <p>{a.resumen}</p>
+            <div class="card-footer">
+              <span class="autor">✍️ {a.autor}</span>
+              <a href="#" class="leer-mas">Leer más →</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .hero-pagina {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+    padding: 4rem 2rem;
+  }
+
+  .hero-pagina h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-pagina p {
+    color: var(--beige);
+    font-size: 1.1rem;
+  }
+
+  .contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .articulos {
+    padding: 5rem 2rem;
+  }
+
+  .grid-articulos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .card-articulo {
+    border: 2px solid var(--beige);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .card-articulo:hover {
+    border-color: var(--azul-teal);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .categoria {
+    background-color: var(--naranja);
+    color: var(--blanco);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+  }
+
+  .fecha {
+    color: #888;
+    font-size: 0.85rem;
+  }
+
+  .card-articulo h3 {
+    color: var(--azul-oscuro);
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+
+  .card-articulo p {
+    color: #555;
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .autor {
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  .leer-mas {
+    color: var(--naranja);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .leer-mas:hover {
+    text-decoration: underline;
+  }
+</style>

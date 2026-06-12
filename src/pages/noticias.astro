@@ -1,0 +1,166 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const noticias = [
+  {
+    titulo: "ASF lanza su página web oficial",
+    tipo: "Anuncio",
+    fecha: "Junio 2025",
+    descripcion: "Adolescencias Sin Ficciones estrena su espacio digital para compartir investigaciones, proyectos y noticias con la comunidad."
+  },
+  {
+    titulo: "Intervención en colegio de Ica",
+    tipo: "Evento",
+    fecha: "Mayo 2025",
+    descripcion: "Realizamos una intervención sobre derechos adolescentes con estudiantes de secundaria en una institución educativa de Ica."
+  },
+  {
+    titulo: "Participación en foro universitario",
+    tipo: "Evento",
+    fecha: "Abril 2025",
+    descripcion: "Miembros de ASF expusieron sobre mitos de la adolescencia en un foro organizado por una universidad de Lima."
+  },
+];
+---
+
+<Layout title="Noticias">
+
+  <section class="hero-pagina">
+    <div class="contenedor">
+      <h1>Noticias y Eventos</h1>
+      <p>Mantente al tanto de nuestras actividades</p>
+    </div>
+  </section>
+
+  <section class="noticias">
+    <div class="contenedor">
+      <div class="lista-noticias">
+        {noticias.map((n) => (
+          <div class="card-noticia">
+            <div class="noticia-fecha">
+              <span class="mes">{n.fecha.split(" ")[0]}</span>
+              <span class="anio">{n.fecha.split(" ")[1]}</span>
+            </div>
+            <div class="noticia-contenido">
+              <div class="noticia-meta">
+                <span class={`tipo ${n.tipo.toLowerCase()}`}>{n.tipo}</span>
+              </div>
+              <h3>{n.titulo}</h3>
+              <p>{n.descripcion}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  .hero-pagina {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+    padding: 4rem 2rem;
+  }
+
+  .hero-pagina h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-pagina p {
+    color: var(--beige);
+    font-size: 1.1rem;
+  }
+
+  .contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .noticias {
+    padding: 5rem 2rem;
+  }
+
+  .lista-noticias {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .card-noticia {
+    display: flex;
+    gap: 2rem;
+    border: 2px solid var(--beige);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .card-noticia:hover {
+    border-color: var(--azul-teal);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .noticia-fecha {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    min-width: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mes {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .anio {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--naranja);
+  }
+
+  .noticia-contenido {
+    flex: 1;
+  }
+
+  .noticia-meta {
+    margin-bottom: 0.5rem;
+  }
+
+  .tipo {
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .tipo.anuncio {
+    background-color: #e3f2fd;
+    color: #1565c0;
+  }
+
+  .tipo.evento {
+    background-color: #f3e5f5;
+    color: #6a1b9a;
+  }
+
+  .card-noticia h3 {
+    color: var(--azul-oscuro);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-noticia p {
+    color: #555;
+    line-height: 1.6;
+  }
+</style>
