@@ -1,0 +1,117 @@
+---
+import '../styles/global.css';
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Adolescencias Sin Ficciones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+
+    <nav class="navbar">
+      <div class="nav-contenido">
+        <a href="/" class="logo">ASF</a>
+        <ul class="nav-links">
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/proyectos">Proyectos</a></li>
+          <li><a href="/articulos">Artículos</a></li>
+          <li><a href="/noticias">Noticias</a></li>
+          <li><a href="/galeria">Galería</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="footer-contenido">
+        <p>© 2025 Adolescencias Sin Ficciones</p>
+        <div class="footer-redes">
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">correo@asf.com</a>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<style>
+  .navbar {
+    background-color: var(--azul-oscuro);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-contenido {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    color: var(--naranja);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+
+  .nav-links a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--naranja);
+  }
+
+  .footer {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+    padding: 2rem;
+    margin-top: 4rem;
+  }
+
+  .footer-contenido {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-redes {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-redes a {
+    color: var(--beige);
+    text-decoration: none;
+  }
+
+  .footer-redes a:hover {
+    color: var(--naranja);
+  }
+</style>

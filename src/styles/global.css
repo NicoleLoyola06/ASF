@@ -1,0 +1,21 @@
+:root {
+  --naranja:     #E05A2B;
+  --azul-oscuro: #1E3A5F;
+  --azul-teal:   #1A7A8A;
+  --azul-medio:  #2E5F8A;
+  --beige:       #F0E6D3;
+  --blanco:      #FFFFFF;
+  --texto:       #1E3A5F;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--blanco);
+  color: var(--texto);
+}
