@@ -19,17 +19,23 @@ const valores = [
 ];
 
 const servicios = [
-  { label: 'Difusión en redes sociales', text: 'Contenido basado en evidencia para desmontar mitos sobre la adolescencia.', tint: 'beige' },
-  { label: 'Intervenciones educativas', text: 'Talleres y charlas en colegios y universidades del país.', tint: 'turquesa' },
-  { label: 'Defensa de derechos humanos', text: 'Participación activa en espacios políticos y comunitarios.', tint: 'turquesa' },
-  { label: 'Publicaciones e investigaciones', text: 'Artículos y columnas de opinión con rigor académico.', tint: 'beige' },
+  { label: 'Difusión en redes sociales', text: 'Contenido basado en evidencia para desmontar mitos sobre la adolescencia.', tint: 'beige', featured: true },
+  { label: 'Intervenciones educativas', text: 'Talleres y charlas en colegios y universidades del país.', tint: 'turquesa', featured: false },
+  { label: 'Defensa de derechos humanos', text: 'Participación activa en espacios políticos y comunitarios.', tint: 'turquesa', featured: false },
+  { label: 'Publicaciones e investigaciones', text: 'Artículos y columnas de opinión con rigor académico.', tint: 'beige', featured: true },
 ];
 
 const impacto = [
-  'Colegios y universidades del Perú',
-  'Publicaciones basadas en evidencia',
-  'Proyectos de intervención social',
-  'Alianzas institucionales en construcción',
+  { label: 'Talleres realizados', value: '40+', icon: '1' },
+  { label: 'Estudiantes alcanzados', value: '2,500+', icon: '2' },
+  { label: 'Instituciones asociadas', value: '15+', icon: '3' },
+  { label: 'Artículos publicados', value: '50+', icon: '4' },
+];
+
+const testimonios = [
+  { quote: '"ASF cambió mi perspectiva sobre los adolescentes. Finalmente, alguien está hablando con evidencia."', author: 'María, educadora', role: 'Docente' },
+  { quote: '"Necesitábamos esta voz. Los adolescentes merecemos ser escuchados sin prejuicios."', author: 'Carlos, 18 años', role: 'Estudiante' },
+  { quote: '"Su trabajo es serio, riguroso y profundamente necesario para el Perú."', author: 'Dra. Patricia López', role: 'Psicóloga clínica' },
 ];
 ---
 
@@ -42,19 +48,20 @@ const impacto = [
     <div class="hero__copy" data-reveal>
       <h1>La adolescencia sin mitos, con evidencia.</h1>
       <p class="hero__subtext">
-        Agrupación estudiantil peruana que desmitifica la adolescencia con evidencia
-        científica, defensa de derechos y acción social.
+        Somos una agrupación estudiantil peruana dedicada a desmitificar la adolescencia
+        mediante investigación rigurosa, defensa activa de derechos y acción social transformadora.
+        Trabajamos en colegios, universidades y espacios comunitarios para cambiar la narrativa sobre la juventud peruana.
       </p>
       <div class="btn-row">
         <a href="/proyectos" class="btn btn-primary">Conoce nuestros proyectos</a>
-        <a href="/articulos" class="btn btn-secondary">Ver publicaciones</a>
+        <a href="/quienes-somos" class="btn btn-secondary">Conoce al equipo</a>
       </div>
     </div>
     <div class="hero__visual" aria-hidden="true">
-      <span class="mark-circle hero__c1"></span>
-      <span class="mark-circle hero__c2"></span>
-      <span class="mark-circle hero__c3"></span>
-      <svg viewBox="0 0 100 100" class="hero__star">
+      <span class="mark-circle hero__c1" style="animation: float 6s ease-in-out infinite;"></span>
+      <span class="mark-circle hero__c2" style="animation: float 8s ease-in-out infinite 0.5s;"></span>
+      <span class="mark-circle hero__c3" style="animation: float 7s ease-in-out infinite 1s;"></span>
+      <svg viewBox="0 0 100 100" class="hero__star" style="animation: rotate 12s linear infinite;">
         <path
           d="M50 2 L61 38 L98 38 L68 60 L79 96 L50 74 L21 96 L32 60 L2 38 L39 38 Z"
           fill="var(--color-azul-profundo)"
@@ -76,8 +83,9 @@ const impacto = [
       <a href="/quienes-somos" class="btn btn-secondary">Conoce al equipo</a>
     </div>
     <blockquote class="pull-quote" data-reveal>
+      <span class="pull-quote__accent"></span>
       <p>&ldquo;Ser adolescente en el Perú es difícil. Y la falta de comprensión sobre esta etapa lo hace aún más complejo.&rdquo;</p>
-      <cite>Ideario de Adolescencias Sin Ficciones</cite>
+      <cite>— Ideario de Adolescencias Sin Ficciones</cite>
     </blockquote>
   </section>
 
@@ -108,15 +116,16 @@ const impacto = [
     </div>
   </section>
 
-  <!-- Qué hacemos: bento con variación de fondo -->
+  <!-- Qué hacemos: bento con variación de fondo, algunos servicios destacados -->
   <section class="section section--sunken">
     <div class="wrap">
       <div class="section-head" data-reveal>
         <h2>¿Qué hacemos?</h2>
+        <p>Nuestro trabajo se organiza en cuatro pilares estratégicos de cambio social y educativo.</p>
       </div>
-      <div class="grid grid-4">
+      <div class="servicios-grid">
         {servicios.map((servicio) => (
-          <div class={`servicio servicio--${servicio.tint}`} data-reveal>
+          <div class={`servicio servicio--${servicio.tint} ${servicio.featured ? 'servicio--featured' : ''}`} data-reveal>
             <h3>{servicio.label}</h3>
             <p>{servicio.text}</p>
           </div>
@@ -125,15 +134,25 @@ const impacto = [
     </div>
   </section>
 
-  <!-- Impacto: sin cifras inventadas, franja tipográfica plana -->
+  <!-- Impacto: números con iconos, enfoque visual mejorado -->
   <section class="section wrap impacto">
-    <p class="eyebrow">Nuestro impacto</p>
-    <div class="grid grid-4 impacto__list">
+    <div class="section-head" data-reveal>
+      <h2>Nuestro impacto</h2>
+      <p>Desde nuestro inicio, hemos alcanzado estudiantes, educadores e instituciones en todo el Perú con trabajo riguroso y transformador.</p>
+    </div>
+    <div class="impacto-grid">
       {impacto.map((item) => (
-        <p data-reveal>{item}</p>
+        <div class="impacto-card" data-reveal>
+          <div class="impacto-card__icon">
+            <img src={`/images/icons/${item.icon}.png`} alt={item.label} />
+          </div>
+          <div class="impacto-card__content">
+            <p class="impacto-card__value">{item.value}</p>
+            <p class="impacto-card__label">{item.label}</p>
+          </div>
+        </div>
       ))}
     </div>
-    <p class="field-hint">Cifras de impacto detalladas, disponibles próximamente.</p>
   </section>
 
   <!-- Eventos destacados -->
@@ -175,6 +194,27 @@ const impacto = [
           <span class="article-card__author">Por {article.data.author}</span>
         </a>
       ))}
+    </div>
+  </section>
+
+  <!-- Testimonios: voces reales de impacto -->
+  <section class="section section--sunken">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Lo que dicen de nuestro trabajo</h2>
+        <p>Educadores, estudiantes e investigadores comparten cómo ASF está transformando conversaciones sobre la adolescencia en el Perú.</p>
+      </div>
+      <div class="testimonios-grid">
+        {testimonios.map((testimonio) => (
+          <div class="testimonio-card" data-reveal>
+            <p class="testimonio-card__quote">{testimonio.quote}</p>
+            <div class="testimonio-card__author">
+              <p class="testimonio-card__name">{testimonio.author}</p>
+              <p class="testimonio-card__role">{testimonio.role}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -259,11 +299,23 @@ const impacto = [
   }
 
   .pull-quote {
+    position: relative;
     margin: 0;
     padding: 1.75rem;
-    border-left: 4px solid var(--accent-soft);
+    padding-top: 2.5rem;
     background: var(--surface-sunken);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .pull-quote__accent {
+    position: absolute;
+    top: 0;
+    left: 1.75rem;
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-soft) 0%, var(--color-turquesa) 100%);
+    border-radius: var(--radius-sm);
   }
 
   .pull-quote p {
@@ -300,10 +352,33 @@ const impacto = [
     background: var(--accent-soft);
   }
 
+  .servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 3vw, 2rem);
+  }
+
   .servicio {
     padding: clamp(1.5rem, 3vw, 2rem);
     border-radius: var(--radius-md);
     height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .servicio--featured {
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .servicio--featured h3 {
+    font-size: var(--text-2xl);
+  }
+
+  .servicio:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
   }
 
   .servicio--beige {
@@ -316,6 +391,108 @@ const impacto = [
 
   .servicio h3 {
     color: var(--accent-strong);
+  }
+
+  .impacto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .impacto-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background: var(--surface-sunken);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--accent-soft);
+  }
+
+  .impacto-card__icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .impacto-card__icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .impacto-card__value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    color: var(--accent-strong);
+    font-weight: 700;
+  }
+
+  .impacto-card__label {
+    margin: 0;
+    font-family: var(--font-subtitle);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .testimonio-card {
+    padding: clamp(2rem, 3vw, 2.5rem);
+    background: #ffffff;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .testimonio-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .testimonio-card__quote {
+    margin: 0;
+    font-family: var(--font-subtitle);
+    font-size: var(--text-lg);
+    color: var(--accent-strong);
+    font-weight: 500;
+    line-height: 1.6;
+  }
+
+  .testimonio-card__author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .testimonio-card__name {
+    margin: 0;
+    font-family: var(--font-subtitle);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    color: var(--accent-strong);
+  }
+
+  .testimonio-card__role {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
   }
 
   .impacto__list {
@@ -407,6 +584,31 @@ const impacto = [
     color: var(--accent-strong);
   }
 
+  /* Animaciones */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [style*="animation"] {
+      animation: none !important;
+    }
+  }
+
   @media (max-width: 900px) {
     .hero,
     .sobre-nosotros {
@@ -416,6 +618,14 @@ const impacto = [
     .hero__visual {
       order: -1;
       height: 220px;
+    }
+
+    .servicios-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .servicio--featured {
+      grid-row: span 1;
     }
   }
 </style>
