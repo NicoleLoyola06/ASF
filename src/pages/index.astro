@@ -1,0 +1,421 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articulos', ({ data }) => data.published);
+const featuredArticles = allArticles
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
+
+const upcomingEvents = (await getCollection('eventos', ({ data }) => data.published)).sort(
+  (a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf()
+);
+
+const valores = [
+  { label: 'Evidencia', text: 'Todo lo que comunicamos está respaldado por investigación y datos reales, no por suposiciones.' },
+  { label: 'Compromiso', text: 'Actuamos con convicción en defensa activa de los derechos de los adolescentes.' },
+  { label: 'Educación', text: 'Creemos que informar transforma personas, instituciones y sociedades.' },
+  { label: 'Acción', text: 'Intervenimos activamente en colegios, universidades y espacios sociales para generar cambio real.' },
+];
+
+const servicios = [
+  { label: 'Difusión en redes sociales', text: 'Contenido basado en evidencia para desmontar mitos sobre la adolescencia.', tint: 'beige' },
+  { label: 'Intervenciones educativas', text: 'Talleres y charlas en colegios y universidades del país.', tint: 'turquesa' },
+  { label: 'Defensa de derechos humanos', text: 'Participación activa en espacios políticos y comunitarios.', tint: 'turquesa' },
+  { label: 'Publicaciones e investigaciones', text: 'Artículos y columnas de opinión con rigor académico.', tint: 'beige' },
+];
+
+const impacto = [
+  'Colegios y universidades del Perú',
+  'Publicaciones basadas en evidencia',
+  'Proyectos de intervención social',
+  'Alianzas institucionales en construcción',
+];
+---
+
+<Layout
+  title="Inicio"
+  description="Agrupación estudiantil peruana que desmitifica la adolescencia con evidencia científica, defensa de derechos y acción social."
+>
+  <!-- Hero: asymmetric split, geometric visual (sin fotos, per manual de identidad) -->
+  <section class="hero wrap">
+    <div class="hero__copy" data-reveal>
+      <h1>La adolescencia sin mitos, con evidencia.</h1>
+      <p class="hero__subtext">
+        Agrupación estudiantil peruana que desmitifica la adolescencia con evidencia
+        científica, defensa de derechos y acción social.
+      </p>
+      <div class="btn-row">
+        <a href="/proyectos" class="btn btn-primary">Conoce nuestros proyectos</a>
+        <a href="/articulos" class="btn btn-secondary">Ver publicaciones</a>
+      </div>
+    </div>
+    <div class="hero__visual" aria-hidden="true">
+      <span class="mark-circle hero__c1"></span>
+      <span class="mark-circle hero__c2"></span>
+      <span class="mark-circle hero__c3"></span>
+      <svg viewBox="0 0 100 100" class="hero__star">
+        <path
+          d="M50 2 L61 38 L98 38 L68 60 L79 96 L50 74 L21 96 L32 60 L2 38 L39 38 Z"
+          fill="var(--color-azul-profundo)"
+        />
+      </svg>
+    </div>
+  </section>
+
+  <!-- Sobre nosotros: texto + cita real del Ideario -->
+  <section class="section wrap sobre-nosotros">
+    <div data-reveal>
+      <h2>Sobre nosotros</h2>
+      <p>
+        Adolescencias Sin Ficciones nace de la convicción de que la adolescencia es
+        una etapa profundamente mal comprendida en el Perú. Somos estudiantes
+        universitarios que usamos la evidencia científica, la acción social y la
+        defensa activa de derechos para cambiar esa narrativa.
+      </p>
+      <a href="/quienes-somos" class="btn btn-secondary">Conoce al equipo</a>
+    </div>
+    <blockquote class="pull-quote" data-reveal>
+      <p>&ldquo;Ser adolescente en el Perú es difícil. Y la falta de comprensión sobre esta etapa lo hace aún más complejo.&rdquo;</p>
+      <cite>Ideario de Adolescencias Sin Ficciones</cite>
+    </blockquote>
+  </section>
+
+  <!-- Misión: editorial manifesto statement -->
+  <section class="section section--accent mision">
+    <div class="wrap" data-reveal>
+      <p class="eyebrow">Nuestra misión</p>
+      <h2 class="mision__statement">
+        Desmitificar la adolescencia mediante información basada en evidencia,
+        promoviendo los derechos humanos de los adolescentes peruanos.
+      </h2>
+    </div>
+  </section>
+
+  <!-- Valores: lista de 4, sin card boxes -->
+  <section class="section wrap">
+    <div class="section-head" data-reveal>
+      <h2>Lo que nos guía</h2>
+    </div>
+    <div class="grid grid-4 valores">
+      {valores.map((valor) => (
+        <div class="valor" data-reveal>
+          <span class="mark-circle valor__dot"></span>
+          <h3>{valor.label}</h3>
+          <p>{valor.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Qué hacemos: bento con variación de fondo -->
+  <section class="section section--sunken">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>¿Qué hacemos?</h2>
+      </div>
+      <div class="grid grid-4">
+        {servicios.map((servicio) => (
+          <div class={`servicio servicio--${servicio.tint}`} data-reveal>
+            <h3>{servicio.label}</h3>
+            <p>{servicio.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Impacto: sin cifras inventadas, franja tipográfica plana -->
+  <section class="section wrap impacto">
+    <p class="eyebrow">Nuestro impacto</p>
+    <div class="grid grid-4 impacto__list">
+      {impacto.map((item) => (
+        <p data-reveal>{item}</p>
+      ))}
+    </div>
+    <p class="field-hint">Cifras de impacto detalladas, disponibles próximamente.</p>
+  </section>
+
+  <!-- Eventos destacados -->
+  <section class="section section--sunken">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Próximos eventos y actividades</h2>
+      </div>
+      {upcomingEvents.length === 0 ? (
+        <div class="empty-state" data-reveal>
+          <p>Todavía no hay eventos publicados. Estamos preparando las próximas actividades: charlas, intervenciones en colegios y universidades.</p>
+          <a href="/contacto" class="btn btn-secondary">Proponer una actividad</a>
+        </div>
+      ) : (
+        <div class="grid grid-3">
+          {upcomingEvents.slice(0, 3).map((event) => (
+            <a class="card" href={`/eventos/${event.slug}`} data-reveal>
+              <h3>{event.data.title}</h3>
+              <p>{event.data.summary}</p>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Artículos destacados -->
+  <section class="section wrap">
+    <div class="section-head" data-reveal>
+      <h2>Nuestras publicaciones más recientes</h2>
+      <p>Investigación, análisis y evidencia sobre la adolescencia peruana.</p>
+    </div>
+    <div class="grid grid-3">
+      {featuredArticles.map((article) => (
+        <a class="card article-card" href={`/articulos/${article.slug}`} data-reveal>
+          <p class="article-card__category">{article.data.category}</p>
+          <h3>{article.data.title}</h3>
+          <p>{article.data.excerpt}</p>
+          <span class="article-card__author">Por {article.data.author}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="section cta-final">
+    <div class="wrap" data-reveal>
+      <h2>¿Quieres ser parte del cambio?</h2>
+      <p>
+        Únete como voluntario, aliado o institución interesada. Juntos podemos
+        transformar la manera en que el Perú entiende la adolescencia.
+      </p>
+      <div class="btn-row">
+        <a href="/contacto" class="btn btn-primary">Únete</a>
+        <a href="/contacto" class="btn btn-secondary btn-secondary--inverse">Contactar a la agrupación</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: clamp(2.5rem, 6vw, 5rem);
+    min-height: min(80dvh, 640px);
+  }
+
+  .hero__subtext {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+    max-width: 42ch;
+  }
+
+  .hero__visual {
+    position: relative;
+    height: clamp(260px, 32vw, 420px);
+  }
+
+  .hero__c1 {
+    position: absolute;
+    width: 55%;
+    aspect-ratio: 1;
+    background: var(--color-turquesa);
+    top: 8%;
+    right: 8%;
+  }
+
+  .hero__c2 {
+    position: absolute;
+    width: 32%;
+    aspect-ratio: 1;
+    background: var(--color-beige);
+    bottom: 6%;
+    left: 4%;
+  }
+
+  .hero__c3 {
+    position: absolute;
+    width: 18%;
+    aspect-ratio: 1;
+    border: 3px solid var(--color-azul-oscuro);
+    background: transparent;
+    top: 4%;
+    left: 20%;
+  }
+
+  .hero__star {
+    position: absolute;
+    width: 20%;
+    bottom: 18%;
+    right: 20%;
+  }
+
+  .sobre-nosotros {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .pull-quote {
+    margin: 0;
+    padding: 1.75rem;
+    border-left: 4px solid var(--accent-soft);
+    background: var(--surface-sunken);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  .pull-quote p {
+    font-family: var(--font-subtitle);
+    font-size: var(--text-lg);
+    color: var(--accent-strong);
+  }
+
+  .pull-quote cite {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    font-style: normal;
+  }
+
+  .mision {
+    text-align: left;
+  }
+
+  .mision__statement {
+    max-width: 30ch;
+    font-size: var(--text-3xl);
+    color: var(--accent-strong);
+  }
+
+  .valor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .valor__dot {
+    width: 12px;
+    height: 12px;
+    background: var(--accent-soft);
+  }
+
+  .servicio {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: var(--radius-md);
+    height: 100%;
+  }
+
+  .servicio--beige {
+    background: var(--color-beige);
+  }
+
+  .servicio--turquesa {
+    background: color-mix(in srgb, var(--color-turquesa) 35%, white);
+  }
+
+  .servicio h3 {
+    color: var(--accent-strong);
+  }
+
+  .impacto__list {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .impacto__list p {
+    font-family: var(--font-subtitle);
+    font-weight: 600;
+    color: var(--accent-strong);
+    border-top: 2px solid var(--border-subtle);
+    padding-top: 1rem;
+    margin: 0;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-start;
+    max-width: 48ch;
+  }
+
+  .empty-state p {
+    color: var(--text-secondary);
+  }
+
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .article-card__category {
+    font-family: var(--font-subtitle);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .article-card__author {
+    margin-top: auto;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .cta-final {
+    background: var(--accent-strong);
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .cta-final h2,
+  .cta-final p {
+    color: #ffffff;
+  }
+
+  .cta-final .wrap {
+    max-width: 44rem;
+  }
+
+  .cta-final p {
+    margin-inline: auto;
+    color: rgb(255 255 255 / 0.85);
+  }
+
+  .cta-final .btn-row {
+    justify-content: center;
+  }
+
+  .btn-secondary--inverse {
+    color: #ffffff;
+    border-color: rgb(255 255 255 / 0.6);
+  }
+
+  .btn-secondary--inverse:hover {
+    background: #ffffff;
+    color: var(--accent-strong);
+  }
+
+  @media (max-width: 900px) {
+    .hero,
+    .sobre-nosotros {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__visual {
+      order: -1;
+      height: 220px;
+    }
+  }
+</style>

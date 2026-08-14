@@ -1,0 +1,243 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const valores = [
+  { label: 'Evidencia', text: 'Todo lo que comunicamos está respaldado por investigación científica y datos reales, no por suposiciones o mitos.' },
+  { label: 'Compromiso', text: 'Actuamos con convicción en defensa activa de los derechos de los adolescentes.' },
+  { label: 'Educación', text: 'Creemos que informar transforma personas, instituciones y sociedades.' },
+  { label: 'Acción', text: 'Intervenimos activamente en colegios, universidades y espacios sociales para generar cambio real.' },
+];
+
+const enfoqueTeorico = [
+  { name: 'Perspectiva ecológica (Bronfenbrenner)', text: 'El adolescente está situado en contextos de múltiples niveles (familiar, escolar, comunitario, societal) que influyen en su desarrollo.' },
+  { name: 'Aprendizaje sociocultural (Vygotsky)', text: 'El aprendizaje y desarrollo ocurren a través de interacciones sociales y construcción activa con el contexto.' },
+  { name: 'Competencia intercultural', text: 'Cada cultura aporta distintas experiencias sobre la adolescencia, sin crear jerarquías ni determinar la personalidad por completo.' },
+  { name: 'Bienestar integral', text: 'El bienestar depende tanto de factores externos como del significado personal que cada adolescente da a su vida.' },
+  { name: 'Interseccionalidad', text: 'La identidad está compuesta por múltiples dimensiones (género, raza, clase, sexualidad) que se entrelazan.' },
+  { name: 'Sensibilidad socioeconómica', text: 'Reconocemos las diferencias de clase y cómo afectan el desarrollo, buscando cuestionar jerarquías para lograr equidad.' },
+  { name: 'Competencia racial y étnica', text: 'Promovemos el reconocimiento de dinámicas raciales y la reflexión sobre identidad racial en interacciones sociales.' },
+  { name: 'Competencia de género', text: 'Reconocemos las normas, roles y expectativas de género y cómo influyen en experiencias individuales y sociales.' },
+];
+
+const principios = [
+  { label: 'Respeto a la diversidad', text: 'Valoramos y respetamos las distintas experiencias y perspectivas de los adolescentes.' },
+  { label: 'Empatía', text: 'Nos ponemos en el lugar del otro para entender profundamente sus realidades.' },
+  { label: 'Objetividad', text: 'Basamos nuestras afirmaciones en evidencia, no en creencias personales.' },
+  { label: 'Promoción de la agencia', text: 'Fomentamos que los adolescentes sean protagonistas de su propio desarrollo.' },
+  { label: 'Liderazgo', text: 'Inspiramos y capacitamos a otros para generar cambio sostenible.' },
+];
+---
+
+<Layout
+  title="Ideario"
+  description="Misión, visión, valores y enfoque teórico que guían el trabajo de Adolescencias Sin Ficciones."
+>
+  <section class="section wrap page-head">
+    <h1>Nuestro ideario</h1>
+    <p>
+      Los principios fundamentales que guían a Adolescencias Sin Ficciones en su
+      trabajo por desmitificar la adolescencia peruana.
+    </p>
+  </section>
+
+  <section class="section wrap mision-vision">
+    <div class="mv-block" data-reveal>
+      <h2>Misión</h2>
+      <p>
+        Desmitificar la adolescencia mediante la difusión de información basada en
+        evidencia, promoviendo los derechos humanos de los adolescentes peruanos a
+        través de la investigación, la educación y la acción social.
+      </p>
+    </div>
+    <div class="mv-block" data-reveal>
+      <h2>Visión</h2>
+      <p>
+        Ser la agrupación estudiantil de referencia a nivel nacional en el estudio
+        y defensa de la adolescencia peruana, construyendo una sociedad que
+        comprenda y respete esta etapa de vida como crucial para el desarrollo
+        humano integral.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--sunken">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Valores</h2>
+      </div>
+      <div class="valores-list">
+        {valores.map((valor) => (
+          <div class="valor-row" data-reveal>
+            <span class="mark-circle valor-row__dot"></span>
+            <div>
+              <h3>{valor.label}</h3>
+              <p>{valor.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap problematica">
+    <div data-reveal>
+      <p class="eyebrow">La problemática</p>
+      <h2>¿Por qué existimos?</h2>
+      <p>
+        Muchos proyectos sociales abordan la adolescencia desde una perspectiva
+        adultocéntrica, sin que los propios adolescentes tengan voz en la
+        construcción de narrativas sobre su experiencia. Esto ha generado mitos
+        perjudiciales, representaciones importadas de contextos que no reflejan la
+        realidad peruana, y una falta de reconocimiento de los adolescentes como
+        sujetos de derechos y actores sociales.
+      </p>
+      <p><strong>Ser adolescente en el Perú es difícil.</strong> Y la falta de comprensión sobre esta etapa lo hace aún más complejo.</p>
+    </div>
+  </section>
+
+  <section class="section section--sunken">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Enfoque teórico</h2>
+        <p>Nuestro trabajo se fundamenta en perspectivas científicas que reconocen la complejidad de la adolescencia.</p>
+      </div>
+      <div class="grid grid-2 enfoque-grid">
+        {enfoqueTeorico.map((item) => (
+          <div class="enfoque-item" data-reveal>
+            <h3>{item.name}</h3>
+            <p>{item.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="section-head" data-reveal>
+      <h2>Principios de acción</h2>
+    </div>
+    <div class="grid grid-3 principios-grid">
+      {principios.map((principio) => (
+        <div class="principio" data-reveal>
+          <h3>{principio.label}</h3>
+          <p>{principio.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--accent derechos">
+    <div class="wrap" data-reveal>
+      <h2>Compromiso con derechos humanos</h2>
+      <p>
+        Defendemos activamente los derechos de los adolescentes establecidos en la
+        Convención sobre los Derechos del Niño, la legislación peruana sobre
+        derechos de la infancia y adolescencia, y los tratados internacionales de
+        derechos humanos. Especialmente: el derecho a la información, la
+        educación, la participación política y la protección contra la violencia,
+        la explotación y la discriminación.
+      </p>
+    </div>
+  </section>
+
+  <section class="section cta-final">
+    <div class="wrap" data-reveal>
+      <h2>Conoce cómo lo llevamos a la práctica</h2>
+      <p>Descubre los proyectos y actividades que materializan nuestro ideario.</p>
+      <div class="btn-row">
+        <a href="/proyectos" class="btn btn-primary">Ver proyectos</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap bibliografia">
+    <p class="field-hint">
+      Bibliografía: Bronfenbrenner, U. (1979). <em>The ecology of human development.</em>
+      Vygotsky, L. S. (1978). <em>Mind in society.</em>
+      Organización de las Naciones Unidas. (1989). <em>Convención sobre los Derechos del Niño.</em>
+    </p>
+  </section>
+</Layout>
+
+<style>
+  .page-head {
+    max-width: 44rem;
+  }
+
+  .page-head p {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .mision-vision {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .mv-block p {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .valores-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .valor-row {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    border-top: 2px solid var(--border-subtle);
+    padding-top: 1.25rem;
+  }
+
+  .valor-row__dot {
+    width: 12px;
+    height: 12px;
+    margin-top: 0.5em;
+    background: var(--accent-soft);
+    flex-shrink: 0;
+  }
+
+  .problematica {
+    max-width: 46rem;
+  }
+
+  .enfoque-item {
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+  }
+
+  .enfoque-item h3 {
+    font-size: var(--text-lg);
+    font-family: var(--font-subtitle);
+  }
+
+  .principio {
+    border-top: 2px solid var(--border-subtle);
+    padding-top: 1.25rem;
+  }
+
+  .derechos {
+    text-align: left;
+  }
+
+  .derechos .wrap {
+    max-width: 46rem;
+  }
+
+  .bibliografia {
+    padding-block: 2rem 4rem;
+  }
+
+  @media (max-width: 900px) {
+    .mision-vision {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

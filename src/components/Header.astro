@@ -1,0 +1,198 @@
+---
+const links = [
+  { href: '/', label: 'Inicio' },
+  { href: '/quienes-somos', label: 'Nosotros' },
+  { href: '/ideario', label: 'Ideario' },
+  { href: '/proyectos', label: 'Proyectos' },
+  { href: '/articulos', label: 'Artículos' },
+  { href: '/eventos', label: 'Eventos' },
+  { href: '/reconocimientos', label: 'Logros' },
+  { href: '/contacto', label: 'Contacto' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a href="/" class="site-header__brand">
+      <img src="/images/logo-asf.png" alt="Adolescencias Sin Ficciones" width="36" height="36" />
+      <span>Adolescencias<br />Sin Ficciones</span>
+    </a>
+
+    <nav class="site-header__nav" aria-label="Navegación principal" id="site-nav">
+      <ul>
+        {links.map((link) => (
+          <li>
+            <a href={link.href} aria-current={currentPath === link.href ? 'page' : undefined}>
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a href="/contacto" class="btn btn-primary site-header__cta">Únete</a>
+      <button
+        id="nav-toggle"
+        class="site-header__toggle"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        aria-label="Abrir menú de navegación"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    background: rgb(255 255 255 / 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .site-header__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: var(--accent-strong);
+    font-family: var(--font-subtitle);
+    font-weight: 700;
+    font-size: 0.85rem;
+    line-height: 1.15;
+    flex-shrink: 0;
+  }
+
+  .site-header__brand img {
+    border-radius: 50%;
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 1.6vw, 1.6rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-header__nav a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-family: var(--font-subtitle);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: 0.4em 0.1em;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .site-header__nav a:hover,
+  .site-header__nav a[aria-current='page'] {
+    color: var(--accent);
+    border-color: var(--accent-soft);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .site-header__toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border-subtle);
+    background: var(--surface);
+    cursor: pointer;
+  }
+
+  .site-header__toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    margin-inline: auto;
+    background: var(--accent-strong);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  @media (max-width: 1023px) {
+    .site-header__nav {
+      position: fixed;
+      inset: var(--nav-height) 0 0 0;
+      background: var(--surface);
+      padding: 2rem clamp(1.25rem, 4vw, 2.5rem);
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .site-header__nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .site-header__nav a {
+      font-size: var(--text-lg);
+    }
+
+    .site-header.is-open .site-header__nav {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .site-header__toggle {
+      display: flex;
+    }
+
+    .site-header__cta {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.querySelector('.site-header');
+  const toggle = document.getElementById('nav-toggle');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = header?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(Boolean(isOpen)));
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      header?.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>

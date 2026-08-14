@@ -1,0 +1,82 @@
+/*
+  Sistema de diseño ASF — basado en Brand/Manual de Identidad/MANUAL DE IDENTIDAD.md
+
+  Fuentes: Marykate y Glacial Indifference no están disponibles como archivos
+  locales todavía (no se encontraron en Brand/). Se declaran aquí con @font-face
+  apuntando a /fonts/ para cuando el equipo suba los archivos reales; mientras
+  tanto el sistema cae a una pila de respaldo tipográficamente compatible.
+*/
+
+@font-face {
+  font-family: 'Marykate';
+  src: url('/fonts/Marykate.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Glacial Indifference';
+  src: url('/fonts/GlacialIndifference-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Glacial Indifference';
+  src: url('/fonts/GlacialIndifference-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+:root {
+  /* Paleta de marca */
+  --color-turquesa: #81c1c3;
+  --color-beige: #e9d2bd;
+  --color-azul-profundo: #007b8c;
+  --color-azul-oscuro: #2f4f6b;
+  --color-fondo: #eeeeee;
+
+  /* Tokens semánticos (light, único tema del sitio) */
+  --surface: #ffffff;
+  --surface-sunken: var(--color-fondo);
+  --surface-accent: var(--color-beige);
+  --text-primary: #1c2b30;
+  --text-secondary: #4a5a5e;
+  --text-on-accent: #ffffff;
+  --border-subtle: #d8d2c8;
+  --accent: var(--color-azul-profundo);
+  --accent-strong: var(--color-azul-oscuro);
+  --accent-soft: var(--color-turquesa);
+  --focus-ring: var(--color-azul-profundo);
+
+  /* Tipografía: Marykate para títulos, Glacial Indifference para subtítulos,
+     Barlow (Google Fonts, sí disponible) para cuerpo de texto */
+  --font-display: 'Marykate', 'Barlow Semi Condensed', 'Segoe UI', sans-serif;
+  --font-subtitle: 'Glacial Indifference', 'Barlow', 'Segoe UI', sans-serif;
+  --font-body: 'Barlow', 'Segoe UI', sans-serif;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: 3.5rem;
+
+  /* Radios: sistema all-soft consistente */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* Espaciado (density 3, aire editorial) */
+  --space-section: clamp(4rem, 8vw, 7rem);
+  --space-section-sm: clamp(2.5rem, 5vw, 4rem);
+
+  --shadow-soft: 0 12px 32px -16px rgb(47 79 107 / 0.18);
+  --shadow-lift: 0 20px 48px -20px rgb(47 79 107 / 0.28);
+
+  --max-width: 1280px;
+  --nav-height: 76px;
+}

@@ -1,0 +1,193 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const articles = (await getCollection('articulos', ({ data }) => data.published)).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+);
+
+const categories = ['Todos', ...new Set(articles.map((a) => a.data.category))];
+---
+
+<Layout
+  title="Artículos"
+  description="Artículos y publicaciones de Adolescencias Sin Ficciones sobre psicología, derechos humanos, educación y salud adolescente."
+>
+  <section class="section wrap page-head">
+    <h1>Artículos y publicaciones</h1>
+    <p>Análisis y evidencia sobre la adolescencia peruana, escritos por nuestro equipo.</p>
+  </section>
+
+  <section class="section wrap">
+    <div class="filtros" role="group" aria-label="Filtrar por categoría">
+      {categories.map((category, i) => (
+        <button class="filtro-btn" data-category={category} aria-pressed={i === 0 ? 'true' : 'false'}>
+          {category}
+        </button>
+      ))}
+    </div>
+
+    <div class="grid grid-3 articulos-grid" id="articulos-grid">
+      {articles.map((article) => (
+        <a class="card article-card" href={`/articulos/${article.slug}`} data-category={article.data.category} data-reveal>
+          <p class="article-card__category">{article.data.category}</p>
+          <h3>{article.data.title}</h3>
+          <p>{article.data.excerpt}</p>
+          <div class="article-card__meta">
+            <span>{article.data.author}</span>
+            <span>{article.data.publishDate.toLocaleDateString('es-PE', { year: 'numeric', month: 'long' })}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--sunken">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Instituciones aliadas</h2>
+      </div>
+      <div class="empty-state" data-reveal>
+        <p>Las instituciones que respaldan nuestras publicaciones se listarán aquí próximamente.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap newsletter">
+    <div data-reveal>
+      <h2>No te pierdas nuestras próximas publicaciones</h2>
+      <p>Déjanos tu correo y te avisamos cuando publiquemos un nuevo artículo.</p>
+    </div>
+    <form class="newsletter-form" id="newsletter-form" data-reveal>
+      <div class="field">
+        <label for="newsletter-email">Correo electrónico</label>
+        <input type="email" id="newsletter-email" name="email" placeholder="tucorreo@ejemplo.com" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Suscribirme</button>
+      <p class="field-hint newsletter-status" id="newsletter-status" role="status"></p>
+    </form>
+  </section>
+</Layout>
+
+<style>
+  .page-head {
+    max-width: 44rem;
+  }
+
+  .page-head p {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .filtro-btn {
+    font-family: var(--font-subtitle);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: 0.5em 1.1em;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--border-subtle);
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .filtro-btn[aria-pressed='true'] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .article-card__category {
+    font-family: var(--font-subtitle);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0;
+  }
+
+  .article-card__meta {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  .newsletter {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: center;
+    background: var(--surface-sunken);
+    border-radius: var(--radius-lg);
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .newsletter-form .field {
+    width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    .newsletter {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filtro-btn');
+  const cards = document.querySelectorAll<HTMLElement>('#articulos-grid > *');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      buttons.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      button.setAttribute('aria-pressed', 'true');
+      const category = button.dataset.category;
+
+      cards.forEach((card) => {
+        const show = category === 'Todos' || card.dataset.category === category;
+        (card as HTMLElement).style.display = show ? '' : 'none';
+      });
+    });
+  });
+
+  const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
+  const status = document.getElementById('newsletter-status');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (status) {
+      status.textContent = 'Gracias. Muy pronto activaremos las suscripciones por correo.';
+    }
+    form.reset();
+  });
+</script>

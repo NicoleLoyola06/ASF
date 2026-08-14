@@ -1,0 +1,209 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const mesaDirectiva = [
+  { role: 'Presidenta', name: 'Fernanda De Los Ríos', detail: 'Psicología' },
+  { role: 'Vicepresidente', name: 'Alfonso Dávila', detail: '' },
+];
+
+const comisiones = [
+  { name: 'Gestión del Talento Humano', text: 'Cuida el bienestar, la selección y el crecimiento del equipo de voluntarios.' },
+  { name: 'Gestión Financiera', text: 'Administra los recursos y sostenibilidad económica de la agrupación.' },
+  { name: 'Relaciones Públicas', text: 'Construye alianzas con instituciones educativas y organizaciones aliadas.' },
+  { name: 'Comunica', text: 'Produce el contenido y la estrategia de redes sociales de ASF.' },
+  { name: 'Eventos', text: 'Organiza charlas, talleres e intervenciones en colegios y universidades.' },
+  { name: 'Asesoría Legal', text: 'Vela por el marco legal y la defensa de derechos en los proyectos.' },
+  { name: 'Proyectos', text: 'Diseña y ejecuta las intervenciones sociales de la agrupación.' },
+];
+
+function initials(name: string) {
+  return name
+    .split(' ')
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join('');
+}
+---
+
+<Layout
+  title="Quiénes Somos"
+  description="Somos estudiantes universitarios comprometidos con cambiar la narrativa sobre la adolescencia en el Perú."
+>
+  <section class="section wrap page-head">
+    <h1>Quiénes somos</h1>
+    <p>Somos estudiantes universitarios comprometidos con cambiar la narrativa sobre la adolescencia en el Perú.</p>
+  </section>
+
+  <section class="section wrap historia">
+    <div data-reveal>
+      <h2>Nuestra historia</h2>
+      <p>
+        Adolescencias Sin Ficciones nace de la convicción de que la adolescencia
+        es una etapa profundamente mal comprendida en el Perú. Un grupo de
+        estudiantes universitarios, cansados de ver cómo se abordaba a lxs
+        adolescentes desde el prejuicio y no desde la evidencia, decidió construir
+        un espacio que combinara rigor científico con acción social directa.
+      </p>
+      <p>
+        Desde entonces, trabajamos con la convicción de que informar transforma:
+        combinamos investigación, comunicación y trabajo de campo en colegios y
+        universidades para cambiar cómo el Perú entiende y trata a sus adolescentes.
+      </p>
+    </div>
+    <div class="impacto-callout" data-reveal>
+      <h3>Nuestro impacto</h3>
+      <p>
+        Cada intervención, publicación y alianza institucional contribuye a
+        visibilizar a los adolescentes peruanos como sujetos de derechos y
+        actores de cambio social, no como un problema a resolver.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--sunken">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Equipo</p>
+        <h2>Mesa directiva</h2>
+      </div>
+      <div class="grid grid-3">
+        {mesaDirectiva.map((persona) => (
+          <div class="persona" data-reveal>
+            <span class="persona__avatar">{initials(persona.name)}</span>
+            <h3>{persona.name}</h3>
+            <p>{persona.role}{persona.detail ? ` · ${persona.detail}` : ''}</p>
+          </div>
+        ))}
+        <div class="persona persona--pending" data-reveal>
+          <span class="mark-circle persona__dot"></span>
+          <p>El resto de la mesa directiva se actualizará próximamente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="section-head" data-reveal>
+      <h2>Comisiones de trabajo</h2>
+      <p>Siete comisiones sostienen la operación diaria de la agrupación.</p>
+    </div>
+    <div class="grid grid-3 comisiones">
+      {comisiones.map((comision) => (
+        <div class="comision" data-reveal>
+          <h3>{comision.name}</h3>
+          <p>{comision.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--accent">
+    <div class="wrap timeline-block" data-reveal>
+      <p class="eyebrow">Trayectoria</p>
+      <h2>Nuestra línea de tiempo</h2>
+      <p>Estamos documentando los hitos más importantes de ASF desde su fundación hasta hoy. Muy pronto podrás ver aquí nuestra trayectoria completa.</p>
+    </div>
+  </section>
+
+  <section class="section wrap aliados">
+    <div class="section-head" data-reveal>
+      <h2>Aliados</h2>
+      <p>Universidades, colegios y organizaciones que han colaborado con nosotros.</p>
+    </div>
+    <div class="empty-state" data-reveal>
+      <p>Nuestro directorio de aliados institucionales se publicará próximamente.</p>
+    </div>
+  </section>
+
+  <section class="section cta-final">
+    <div class="wrap" data-reveal>
+      <h2>Súmate a ASF</h2>
+      <p>Buscamos voluntarios, aliados institucionales y personas que quieran aportar desde su carrera o experiencia.</p>
+      <div class="btn-row">
+        <a href="/contacto" class="btn btn-primary">Únete</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-head {
+    padding-bottom: 0;
+    max-width: 48rem;
+  }
+
+  .page-head p {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .historia {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: start;
+  }
+
+  .impacto-callout {
+    background: var(--surface-sunken);
+    border-radius: var(--radius-md);
+    padding: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .impacto-callout h3 {
+    font-family: var(--font-subtitle);
+    color: var(--accent-strong);
+  }
+
+  .persona {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: flex-start;
+  }
+
+  .persona__avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-subtitle);
+    font-weight: 700;
+    font-size: var(--text-lg);
+  }
+
+  .persona--pending {
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  .persona__dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent-soft);
+  }
+
+  .comision {
+    border-top: 2px solid var(--border-subtle);
+    padding-top: 1.25rem;
+  }
+
+  .comision h3 {
+    font-size: var(--text-xl);
+  }
+
+  .timeline-block {
+    max-width: 40rem;
+  }
+
+  @media (max-width: 900px) {
+    .historia {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

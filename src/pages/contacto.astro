@@ -1,0 +1,225 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const faqs = [
+  {
+    q: '¿Cómo puedo unirme a ASF?',
+    a: 'Escríbenos a través del formulario de esta página o a nuestro correo institucional contándonos qué te interesa (comunicación, proyectos, eventos, gestión) y te contactaremos para coordinar los siguientes pasos.',
+  },
+  {
+    q: '¿Cómo puede colaborar mi institución?',
+    a: 'Colegios, universidades y organizaciones pueden facilitar espacios para talleres, co-crear proyectos o difundir nuestras publicaciones. Cuéntanos tu propuesta en el formulario indicando el tipo de colaboración.',
+  },
+  {
+    q: '¿Qué tipo de proyectos realizan?',
+    a: 'Intervenciones educativas en colegios y universidades, publicaciones basadas en evidencia y acciones de defensa de derechos humanos de adolescentes. Puedes revisar el detalle en la sección de Proyectos.',
+  },
+  {
+    q: '¿Cómo participo en un evento?',
+    a: 'Publicamos nuestras próximas actividades en la sección de Eventos. Si quieres proponer una charla o taller para tu institución, escríbenos por este mismo formulario.',
+  },
+];
+---
+
+<Layout
+  title="Contacto"
+  description="Escríbenos para unirte como voluntario, aliado o institución interesada en colaborar con Adolescencias Sin Ficciones."
+>
+  <section class="section wrap page-head">
+    <h1>Contacto</h1>
+    <p>Cuéntanos cómo quieres sumarte a Adolescencias Sin Ficciones.</p>
+  </section>
+
+  <section class="section wrap contacto-grid">
+    <div class="contacto-info" data-reveal>
+      <h2>Información de contacto</h2>
+      <a class="contacto-info__email" href="mailto:adolescenciassinficciones@gmail.com">adolescenciassinficciones@gmail.com</a>
+
+      <h3>Redes sociales</h3>
+      <ul class="contacto-info__socials">
+        <li>Instagram</li>
+        <li>TikTok</li>
+        <li>LinkedIn</li>
+      </ul>
+      <p class="field-hint">Enlaces a nuestras redes, disponibles próximamente.</p>
+
+      <h3>Dónde trabajamos</h3>
+      <p>Con sede en Lima, Perú. Realizamos intervenciones en colegios y universidades a nivel nacional.</p>
+
+      <div class="alianzas" id="alianzas">
+        <h3>Alianzas institucionales</h3>
+        <p>
+          Si representas al MINEDU, MIMP, un gobierno regional, colegio, universidad
+          u ONG interesada en financiar o co-ejecutar proyectos, indícalo en el
+          formulario para atenderte directamente.
+        </p>
+      </div>
+    </div>
+
+    <form class="contacto-form" id="contacto-form" data-reveal>
+      <div class="field">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+      </div>
+      <div class="field">
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" placeholder="tucorreo@ejemplo.com" required />
+      </div>
+      <div class="field">
+        <label for="tipo">Tipo de participante</label>
+        <select id="tipo" name="tipo" required>
+          <option value="">Selecciona una opción</option>
+          <option value="Adolescente o estudiante">Adolescente o estudiante</option>
+          <option value="Especialista o aliado (psicología, educación, trabajo social)">Especialista o aliado</option>
+          <option value="Institución educativa, ONG o autoridad">Institución educativa, ONG o autoridad</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+      <div class="field" id="voluntariado">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos en qué te gustaría colaborar" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+      <p class="field-hint" id="contacto-status" role="status"></p>
+    </form>
+  </section>
+
+  <section class="section section--sunken">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details class="faq-item" data-reveal>
+            <summary>{faq.q}</summary>
+            <p>{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-head {
+    max-width: 44rem;
+  }
+
+  .page-head p {
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .contacto-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .contacto-info h3 {
+    font-size: var(--text-base);
+    font-family: var(--font-subtitle);
+    color: var(--accent-strong);
+    margin-top: 1.75rem;
+  }
+
+  .contacto-info__email {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--accent);
+    font-family: var(--font-subtitle);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin: 0.5rem 0 0.5rem;
+  }
+
+  .contacto-info__socials {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .contacto-info__socials li {
+    font-size: var(--text-sm);
+    padding: 0.4em 0.9em;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+  }
+
+  .alianzas {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--surface-accent);
+    border-radius: var(--radius-md);
+  }
+
+  .alianzas p {
+    color: var(--text-primary);
+  }
+
+  .contacto-form {
+    background: var(--surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 48rem;
+  }
+
+  .faq-item {
+    border-top: 2px solid var(--border-subtle);
+    padding-top: 1.25rem;
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-family: var(--font-subtitle);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--accent-strong);
+  }
+
+  .faq-item p {
+    margin-top: 0.75rem;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 900px) {
+    .contacto-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contacto-form') as HTMLFormElement | null;
+  const status = document.getElementById('contacto-status');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const nombre = String(data.get('nombre') ?? '');
+    const correo = String(data.get('correo') ?? '');
+    const tipo = String(data.get('tipo') ?? '');
+    const mensaje = String(data.get('mensaje') ?? '');
+
+    const subject = `Contacto ASF: ${tipo || 'Consulta general'}`;
+    const body = `Nombre: ${nombre}\nCorreo: ${correo}\nTipo: ${tipo}\n\n${mensaje}`;
+    const mailto = `mailto:adolescenciassinficciones@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailto;
+    if (status) {
+      status.textContent = 'Se abrió tu cliente de correo con el mensaje listo para enviar.';
+    }
+  });
+</script>

@@ -1,0 +1,90 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const eventos = await getCollection('eventos', ({ data }) => data.published);
+  return eventos.map((evento) => ({
+    params: { slug: evento.slug },
+    props: { evento, allEventos: eventos },
+  }));
+}
+
+const { evento, allEventos } = Astro.props;
+const { Content } = await render(evento);
+
+const relacionados = allEventos.filter((e) => e.slug !== evento.slug).slice(0, 3);
+
+const dateFormatter = new Intl.DateTimeFormat('es-PE', { dateStyle: 'long', timeStyle: 'short' });
+---
+
+<Layout title={evento.data.title} description={evento.data.summary}>
+  <article class="section wrap evento">
+    <header class="evento__head" data-reveal>
+      <p class="eyebrow">Evento</p>
+      <h1>{evento.data.title}</h1>
+      <div class="evento__meta">
+        <span>{dateFormatter.format(evento.data.startDate)}</span>
+        <span>{evento.data.location}</span>
+        {evento.data.audience && <span>{evento.data.audience}</span>}
+      </div>
+    </header>
+
+    <div class="evento__body" data-reveal>
+      <Content />
+    </div>
+
+    <div class="evento__cta" data-reveal>
+      {evento.data.registrationUrl ? (
+        <a class="btn btn-primary" href={evento.data.registrationUrl} target="_blank" rel="noopener noreferrer">Inscribirme</a>
+      ) : (
+        <a class="btn btn-primary" href="/contacto">Escribir para inscribirme</a>
+      )}
+    </div>
+  </article>
+
+  {relacionados.length > 0 && (
+    <section class="section section--sunken">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <h2>Otros eventos</h2>
+        </div>
+        <div class="grid grid-3">
+          {relacionados.map((item) => (
+            <a class="card" href={`/eventos/${item.slug}`} data-reveal>
+              <h3>{item.data.title}</h3>
+              <p>{item.data.summary}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>
+
+<style>
+  .evento {
+    max-width: 44rem;
+  }
+
+  .evento__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin-top: 1rem;
+  }
+
+  .evento__body {
+    margin-top: 2rem;
+    font-size: var(--text-lg);
+    line-height: 1.75;
+  }
+
+  .evento__cta {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+</style>

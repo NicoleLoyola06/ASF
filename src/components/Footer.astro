@@ -1,0 +1,175 @@
+---
+const columns = [
+  {
+    title: 'Conócenos',
+    links: [
+      { href: '/quienes-somos', label: 'Quiénes somos' },
+      { href: '/ideario', label: 'Ideario' },
+      { href: '/reconocimientos', label: 'Reconocimientos' },
+    ],
+  },
+  {
+    title: 'Contenido',
+    links: [
+      { href: '/proyectos', label: 'Proyectos' },
+      { href: '/articulos', label: 'Artículos' },
+      { href: '/eventos', label: 'Eventos' },
+    ],
+  },
+  {
+    title: 'Súmate',
+    links: [
+      { href: '/contacto', label: 'Contacto' },
+      { href: '/contacto#voluntariado', label: 'Voluntariado' },
+      { href: '/contacto#alianzas', label: 'Alianzas institucionales' },
+    ],
+  },
+];
+
+// Enlaces reales pendientes de que ASF los proporcione (ver /contacto).
+const socials = ['Instagram', 'TikTok', 'LinkedIn'];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="site-footer__brand">
+      <img src="/images/logo-asf.png" alt="Adolescencias Sin Ficciones" width="44" height="44" />
+      <p>La adolescencia sin mitos, con evidencia.</p>
+      <a href="mailto:adolescenciassinficciones@gmail.com">adolescenciassinficciones@gmail.com</a>
+      <ul class="site-footer__socials">
+        {socials.map((social) => (
+          <li>{social}</li>
+        ))}
+      </ul>
+    </div>
+
+    {columns.map((column) => (
+      <nav class="site-footer__col" aria-label={column.title}>
+        <h2>{column.title}</h2>
+        <ul>
+          {column.links.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+  </div>
+
+  <div class="wrap site-footer__bottom">
+    <p>&copy; {year} Adolescencias Sin Ficciones. Lima, Perú.</p>
+    <p>Agrupación estudiantil sin fines de lucro.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--accent-strong);
+    color: rgb(255 255 255 / 0.92);
+    padding-top: var(--space-section-sm);
+  }
+
+  .site-footer h2 {
+    color: #ffffff;
+    font-family: var(--font-subtitle);
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: clamp(2rem, 4vw, 3rem);
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.16);
+  }
+
+  .site-footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .site-footer__brand img {
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .site-footer__brand p {
+    font-family: var(--font-subtitle);
+    font-size: var(--text-lg);
+    max-width: 22ch;
+    color: #ffffff;
+  }
+
+  .site-footer__brand a {
+    text-decoration: none;
+    color: var(--color-turquesa);
+    font-size: var(--text-sm);
+  }
+
+  .site-footer__socials {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+  }
+
+  .site-footer__socials li {
+    font-size: var(--text-xs);
+    color: rgb(255 255 255 / 0.75);
+    border: 1px solid rgb(255 255 255 / 0.3);
+    padding: 0.4em 0.9em;
+    border-radius: var(--radius-pill);
+  }
+
+  .site-footer__col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .site-footer__col a {
+    text-decoration: none;
+    color: rgb(255 255 255 / 0.78);
+    font-size: var(--text-sm);
+    transition: color 0.2s ease;
+  }
+
+  .site-footer__col a:hover {
+    color: #ffffff;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-block: 1.5rem;
+    font-size: var(--text-xs);
+    color: rgb(255 255 255 / 0.6);
+  }
+
+  .site-footer__bottom p {
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .site-footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .site-footer__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
