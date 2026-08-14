@@ -326,95 +326,125 @@ p {
 }
 
 /* ========================================
-   GSAP ANIMATIONS — Keyframes CSS
+   ANIMACIONES (GSAP)
+   Ver src/utils/animations.ts
    ======================================== */
 
-/* Typing effect: texto escribe letra por letra */
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
+/* Cuando GSAP toma el control, la transición CSS de [data-reveal] estorba:
+   pelea cuadro a cuadro con GSAP y la animación se ve pastosa. */
+.anim-ready [data-reveal] {
+  transition: none;
 }
 
-.typing-animation {
+/* --- Máscara de texto: la palabra sube desde abajo sin desbordar --- */
+
+.mask {
+  display: inline-block;
   overflow: hidden;
-  white-space: nowrap;
-  border-right: 3px solid var(--color-turquesa);
-  animation: typing 2s steps(100, end) forwards,
-    blink 0.7s step-end infinite 2s;
+  vertical-align: bottom;
+  /* Aire para que las tildes y descendentes (g, j, p) no se recorten */
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
 }
 
-@keyframes blink {
-  0%, 50% {
-    border-right-color: var(--color-turquesa);
-  }
-  51%, 100% {
-    border-right-color: transparent;
-  }
+.mask > .word {
+  display: inline-block;
+  will-change: transform;
 }
 
-/* Ripple effect para botones */
-@keyframes ripple {
-  to {
-    width: 300px;
-    height: 300px;
-    opacity: 0;
-  }
-}
+/* --- Cortina de apertura de página --- */
 
-.btn {
-  position: relative;
-  overflow: hidden;
-}
-
-/* Custom cursor */
-.cursor {
+.page-curtain {
   position: fixed;
-  width: 8px;
-  height: 8px;
-  background: var(--color-turquesa);
+  inset: 0;
+  z-index: 10000;
+  background: var(--accent-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.page-curtain__mark {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
+  background: var(--color-turquesa);
+  opacity: 0;
+  transform: scale(0.2);
+}
+
+/* --- Línea que se traza bajo los títulos de sección --- */
+
+.section-rule {
+  display: block;
+  width: 72px;
+  height: 2px;
+  margin-bottom: 1.25rem;
+  background: var(--color-turquesa);
+  will-change: transform;
+}
+
+/* --- Cursor personalizado --- */
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: multiply;
+  border-radius: 50%;
+  /* -50% centra el elemento sobre la coordenada del puntero */
+  margin-top: -4px;
+  margin-left: -4px;
 }
 
-.cursor-follower {
-  position: fixed;
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+}
+
+.cursor-ring {
   width: 40px;
   height: 40px;
-  border: 2px solid var(--color-turquesa);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0.2;
+  margin-top: -20px;
+  margin-left: -20px;
+  border: 1.5px solid var(--accent);
+  opacity: 0.25;
+  will-change: transform;
 }
 
-/* Section header line para SVG stroke animation */
-.section-line {
-  width: 60px;
-  height: 2px;
-  margin-top: 1rem;
+/* El cursor del sistema se oculta solo si el personalizado llegó a montarse */
+.has-custom-cursor,
+.has-custom-cursor a,
+.has-custom-cursor button,
+.has-custom-cursor .btn {
+  cursor: none;
 }
 
-.section-line line {
-  stroke-width: 2;
+@media (hover: none) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
 }
 
-/* Respeta preferencias de movimiento reducido */
+/* --- Movimiento reducido: sin cortina, sin cursor, sin máscaras --- */
+
 @media (prefers-reduced-motion: reduce) {
-  .typing-animation,
-  .cursor,
-  .cursor-follower {
-    animation: none;
+  .page-curtain,
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
   }
 
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  .mask > .word {
+    transform: none !important;
+  }
+
+  .section-rule {
+    transform: none !important;
   }
 }
