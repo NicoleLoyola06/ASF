@@ -8,7 +8,7 @@ Código: `src/utils/animations.ts` · Estilos: bloque "ANIMACIONES (GSAP)" en `s
 
 | # | Animación | Referencia de marca | Dónde se ve |
 |---|-----------|--------------------|-------------|
-| 1 | Cortina de apertura | reformcollective.com | Al cargar cualquier página |
+| 1 | Cortina de apertura | reformcollective.com | Solo al entrar al sitio (una vez por pestaña) |
 | 2 | Título que sube desde una máscara, palabra por palabra | aidigital.com ("We are AI digital") | H1 del hero y cada H2 de sección |
 | 3 | Línea que se traza bajo el título | untold.site ("about brands con la línea") | Bajo cada H2 de sección |
 | 4 | Escritura progresiva de textos secundarios | untold.site | Párrafos descriptivos bajo cada H2 |
@@ -21,8 +21,10 @@ Código: `src/utils/animations.ts` · Estilos: bloque "ANIMACIONES (GSAP)" en `s
 
 ## Qué deberías ver, en orden
 
-**1. Al cargar la página (≈1.5 s)**
+**1. Al entrar al sitio (≈1.5 s)**
 Pantalla azul profundo que cubre todo. Un círculo turquesa crece en el centro y se contrae. La pantalla azul **sube y sale** dejando ver el sitio.
+
+Ocurre **una sola vez por pestaña**. Al navegar entre páginas ya no aparece: el hero entra directo. Para volver a verla, abre el sitio en una pestaña nueva (o cierra y reabre esa).
 
 **2. Inmediatamente después**
 El título *"La adolescencia sin mitos, con evidencia."* aparece **palabra por palabra, subiendo desde abajo**, como si cada palabra saliera de detrás de una línea invisible. No es un fundido: es un movimiento vertical con recorte.

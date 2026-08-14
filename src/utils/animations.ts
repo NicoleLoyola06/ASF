@@ -76,6 +76,23 @@ function parseCounterValue(text: string) {
 /* 1. Cortina de apertura de página  (reformcollective.com)             */
 /* ------------------------------------------------------------------ */
 
+/**
+ * La cortina es un saludo de entrada al sitio, no una transición entre páginas.
+ * El sitio es multipágina, así que cada navegación es una carga completa y la
+ * cortina se repetiría en cada clic. sessionStorage la limita a la primera
+ * visita de la pestaña; se reinicia al abrir una pestaña nueva.
+ */
+function isFirstVisit(): boolean {
+  try {
+    if (sessionStorage.getItem('asf:opened')) return false;
+    sessionStorage.setItem('asf:opened', '1');
+    return true;
+  } catch {
+    // Modo privado o cookies bloqueadas: mejor no repetir la cortina.
+    return false;
+  }
+}
+
 function pageOpen(): gsap.core.Timeline {
   const curtain = document.createElement('div');
   curtain.className = 'page-curtain';
@@ -314,10 +331,8 @@ export function initAllAnimations() {
 
   document.documentElement.classList.add('anim-ready');
 
-  // 1. Cortina de apertura, y al terminar entra el hero
-  const open = pageOpen();
-
-  open.add(() => {
+  // 1. Entrada del hero
+  const enterHero = () => {
     if (hero) revealHeading(hero);
     if (heroRest.length) {
       gsap.to(heroRest, {
@@ -329,7 +344,15 @@ export function initAllAnimations() {
         delay: 0.15,
       });
     }
-  }, '-=0.35');
+  };
+
+  if (isFirstVisit()) {
+    // Solo al entrar al sitio: cortina, y el hero entra mientras se retira.
+    pageOpen().add(enterHero, '-=0.35');
+  } else {
+    // Navegación interna: el hero entra directo, sin cortina.
+    enterHero();
+  }
 
   // 2. Títulos de sección al entrar en pantalla
   document.querySelectorAll<HTMLElement>('.section-head h2').forEach((h2) => {
