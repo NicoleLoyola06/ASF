@@ -1,18 +1,32 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Squiggle from '../components/Squiggle.astro';
 import '../styles/global.css';
 
 interface Props {
   title: string;
   description: string;
   image?: string;
+  /**
+   * Color de la línea squiggle de esta página. Cada sección del sitio
+   * tiene el suyo, todos salidos de la paleta del manual, para que al
+   * navegar se note en qué parte del sitio estás. Ver LINEA_COLORES abajo.
+   */
+  lineColor?: string;
+  /**
+   * El inicio arma su propia secuencia de líneas por sección, así que
+   * apaga la del Layout para no encimar dos trazos en el hero.
+   */
+  pageSquiggle?: boolean;
 }
 
 const {
   title,
   description,
   image = '/images/logo-asf.png',
+  lineColor = 'var(--brand-naranja)',
+  pageSquiggle = true,
 } = Astro.props;
 
 const pageTitle = `${title} · Adolescencias Sin Ficciones`;
@@ -44,10 +58,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body style={`--squiggle-color: ${lineColor};`}>
     <a href="#contenido" class="visually-hidden">Saltar al contenido</a>
     <Header />
     <main id="contenido">
+      {pageSquiggle && (
+        <div class="page-squiggle" aria-hidden="true">
+          {/* Margen izquierdo libre: el texto centrado empieza en ~25% */}
+          <Squiggle variant="entrada" mode="load" top="4%" height="96%" left="-10%" width="32%" opacity={0.55} />
+          {/* Margen derecho libre: el texto centrado termina en ~75% */}
+          <Squiggle variant="bajada" class="page-squiggle__seg2" top="0" height="100%" left="6%" width="96%" opacity={0.42} />
+        </div>
+      )}
       <slot />
     </main>
     <Footer />

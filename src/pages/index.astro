@@ -1,6 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Squiggle from '../components/Squiggle.astro';
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+
+// Fotos reales de la agrupación (Fotos/ del backup, ya optimizadas).
+// Van por src/assets y no por public/ para que Astro las convierta a webp
+// y genere los tamaños responsive: las originales pesaban hasta 8 MB.
+import fotoEquipo from '../assets/fotos/principal/equipo-ser-adolescente.jpg';
+import fotoFeria from '../assets/fotos/principal/feria-voluntariado.jpg';
+import fotoTaller from '../assets/fotos/adolescentes/taller-01.jpg';
+import valEvidencia from '../assets/fotos/valores/evidencia.jpg';
+import valCompromiso from '../assets/fotos/valores/compromiso.jpg';
+import valEducacion from '../assets/fotos/valores/educacion.jpg';
+import valAccion from '../assets/fotos/valores/accion.jpg';
 
 const allArticles = await getCollection('articulos', ({ data }) => data.published);
 const featuredArticles = allArticles
@@ -12,10 +25,10 @@ const upcomingEvents = (await getCollection('eventos', ({ data }) => data.publis
 );
 
 const valores = [
-  { label: 'Evidencia', text: 'Todo lo que comunicamos está respaldado por investigación y datos reales, no por suposiciones.' },
-  { label: 'Compromiso', text: 'Actuamos con convicción en defensa activa de los derechos de los adolescentes.' },
-  { label: 'Educación', text: 'Creemos que informar transforma personas, instituciones y sociedades.' },
-  { label: 'Acción', text: 'Intervenimos activamente en colegios, universidades y espacios sociales para generar cambio real.' },
+  { label: 'Evidencia', foto: valEvidencia, text: 'Todo lo que comunicamos está respaldado por investigación y datos reales, no por suposiciones.' },
+  { label: 'Compromiso', foto: valCompromiso, text: 'Actuamos con convicción en defensa activa de los derechos de los adolescentes.' },
+  { label: 'Educación', foto: valEducacion, text: 'Creemos que informar transforma personas, instituciones y sociedades.' },
+  { label: 'Acción', foto: valAccion, text: 'Intervenimos activamente en colegios, universidades y espacios sociales para generar cambio real.' },
 ];
 
 const servicios = [
@@ -50,13 +63,16 @@ const testimonios = [
 <Layout
   title="Inicio"
   description="Agrupación estudiantil peruana que desmitifica la adolescencia con evidencia científica, defensa de derechos y acción social."
+  lineColor="var(--brand-naranja)"
+  pageSquiggle={false}
 >
-  <!-- Hero: composición con la iconografía real del kit de marca (sin fotos, per manual) -->
+  <!-- Hero: foto real del equipo enmarcada entre la iconografía del kit -->
   <section class="hero">
+    <Squiggle variant="entrada" mode="load" class="hero__squiggle" top="-4%" height="105%" left="52%" width="52%" opacity={0.8} />
     <div class="wrap hero__inner">
       <div class="hero__copy above-marks" data-reveal>
         <p class="eyebrow">Agrupación estudiantil peruana</p>
-        <h1>La adolescencia sin mitos, con evidencia.</h1>
+        <h1 data-typewriter>La adolescencia sin mitos, con evidencia.</h1>
         <p class="hero__subtext">
           Desmitificamos la adolescencia mediante investigación rigurosa, defensa activa de
           derechos y acción social transformadora. Trabajamos en colegios, universidades y
@@ -68,11 +84,20 @@ const testimonios = [
         </div>
       </div>
 
-      <div class="hero__visual" aria-hidden="true">
-        <img src="/images/brand/sol.png" alt="" class="brand-mark hero__sol" data-drift="-14" />
-        <img src="/images/brand/mancha.png" alt="" class="brand-mark brand-mark--blend hero__mancha" data-drift="8" />
-        <img src="/images/brand/estrellas.png" alt="" class="brand-mark brand-mark--blend hero__estrellas" data-drift="-22" />
-        <img src="/images/brand/rombos.png" alt="" class="brand-mark brand-mark--blend hero__rombos" data-drift="18" />
+      <div class="hero__visual">
+        <figure class="hero__foto">
+          <Image
+            src={fotoEquipo}
+            alt="Integrantes de Adolescencias Sin Ficciones tras la presentación “Ser adolescente en el Perú”"
+            widths={[420, 720, 1040]}
+            sizes="(max-width: 900px) 90vw, 44vw"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </figure>
+        <img src="/images/brand/sol.png" alt="" class="brand-mark hero__sol" data-drift="-14" aria-hidden="true" />
+        <img src="/images/brand/estrellas.png" alt="" class="brand-mark brand-mark--blend hero__estrellas" data-drift="-22" aria-hidden="true" />
+        <img src="/images/brand/rombos.png" alt="" class="brand-mark brand-mark--blend hero__rombos" data-drift="18" aria-hidden="true" />
       </div>
     </div>
   </section>
@@ -89,11 +114,22 @@ const testimonios = [
       </p>
       <a href="/quienes-somos" class="btn btn-secondary">Conoce al equipo</a>
     </div>
-    <blockquote class="pull-quote" data-reveal>
-      <p>&ldquo;Ser adolescente en el Perú es difícil. Y la falta de comprensión sobre esta etapa lo hace aún más complejo.&rdquo;</p>
-      <cite>— Ideario de Adolescencias Sin Ficciones</cite>
-      <img src="/images/brand/esquina-roja.png" alt="" class="brand-mark pull-quote__esquina" />
-    </blockquote>
+    <div class="sobre-nosotros__lateral">
+      <figure class="foto-marco" data-reveal>
+        <Image
+          src={fotoFeria}
+          alt="Voluntarios de ASF en la feria de organizaciones estudiantiles de la PUCP"
+          widths={[380, 620]}
+          sizes="(max-width: 900px) 90vw, 32vw"
+          loading="lazy"
+        />
+      </figure>
+      <blockquote class="pull-quote" data-reveal>
+        <p>&ldquo;Ser adolescente en el Perú es difícil. Y la falta de comprensión sobre esta etapa lo hace aún más complejo.&rdquo;</p>
+        <cite>— Ideario de Adolescencias Sin Ficciones</cite>
+        <img src="/images/brand/esquina-roja.png" alt="" class="brand-mark pull-quote__esquina" aria-hidden="true" />
+      </blockquote>
+    </div>
   </section>
 
   <!-- Misión: manifiesto a sangre sobre beige -->
@@ -108,19 +144,32 @@ const testimonios = [
     </div>
   </section>
 
-  <!-- Valores: incrustados dentro de la frase, al modo de untold.site -->
+  <!-- Valores: cadena de círculos que se abre desde el centro (untold.site) -->
   <section class="section wrap valores-seccion">
-    <div class="section-head" data-reveal>
+    <Squiggle variant="curva" class="valores__squiggle" top="28%" height="32%" opacity={0.7} />
+    <div class="section-head above-marks" data-reveal>
       <h2>Lo que nos guía</h2>
+      <p>Cada pieza que publicamos pasa por estos cuatro filtros antes de salir.</p>
     </div>
 
-    <p class="valores-frase">
-      Trabajamos con <span class="valor-chip">Evidencia</span>,
-      <span class="valor-chip">Compromiso</span>,
-      <span class="valor-chip">Educación</span> y
-      <span class="valor-chip">Acción</span>. Cada pieza que publicamos pasa por esos cuatro filtros
-      antes de salir.
-    </p>
+    <div class="valores-cadena">
+      <span class="valores-cadena__punteado" aria-hidden="true"></span>
+      {valores.map((valor) => (
+        <div class="valor-circulo">
+          <Image
+            src={valor.foto}
+            alt=""
+            widths={[240, 480]}
+            sizes="240px"
+            loading="lazy"
+            aria-hidden="true"
+          />
+          <span class="valor-circulo__label">{valor.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <p class="valores-cadena__pie">Cuatro valores. <strong>Una sola forma de trabajar.</strong></p>
 
     <div class="grid grid-4 valores">
       {valores.map((valor) => (
@@ -172,10 +221,22 @@ const testimonios = [
 
   <!-- Eventos: pasos numerados (vwlab.io) en vez de un estado vacío mudo -->
   <section class="section section--sunken eventos">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <h2>Próximos eventos y actividades</h2>
-        <p>Llevamos charlas e intervenciones a colegios, universidades y espacios comunitarios de todo el país.</p>
+    <Squiggle variant="curva" class="eventos__squiggle" top="-2%" height="14%" opacity={0.65} />
+    <div class="wrap above-marks">
+      <div class="eventos__intro">
+        <div class="section-head" data-reveal>
+          <h2>Próximos eventos y actividades</h2>
+          <p>Llevamos charlas e intervenciones a colegios, universidades y espacios comunitarios de todo el país.</p>
+        </div>
+        <figure class="foto-marco eventos__foto" data-reveal>
+          <Image
+            src={fotoTaller}
+            alt="Taller de ASF con estudiantes adolescentes"
+            widths={[420, 720]}
+            sizes="(max-width: 900px) 90vw, 36vw"
+            loading="lazy"
+          />
+        </figure>
       </div>
 
       {upcomingEvents.length > 0 && (
@@ -253,7 +314,8 @@ const testimonios = [
 
   <!-- CTA final -->
   <section class="section section--ink cta-final">
-    <img src="/images/brand/sol.png" alt="" class="brand-mark cta-final__sol" data-drift="-24" />
+    <Squiggle variant="cierre" class="cta-final__squiggle" top="6%" height="88%" left="-8%" width="30%" opacity={0.5} color="var(--brand-celeste)" />
+    <img src="/images/brand/sol.png" alt="" class="brand-mark cta-final__sol" data-drift="-24" aria-hidden="true" />
     <div class="wrap above-marks" data-reveal>
       <h2>¿Quieres ser parte del cambio?</h2>
       <p>
@@ -305,31 +367,45 @@ const testimonios = [
     height: clamp(300px, 36vw, 480px);
   }
 
+  /* La foto del equipo es el ancla del hero; los íconos del kit quedan
+     alrededor como acento, no encima de las caras. */
+  .hero__foto {
+    position: absolute;
+    inset: 6% 12% 6% 6%;
+    margin: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lift);
+    z-index: 1;
+  }
+
+  .hero__foto :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   /* La composición reproduce el ritmo del kit: una figura grande, dos
      medianas y un acento, sin que ninguna caiga sobre el texto. */
   .hero__sol {
-    width: 58%;
-    top: 2%;
-    right: 2%;
-  }
-
-  .hero__mancha {
-    width: 62%;
-    bottom: 0%;
-    left: -2%;
-    opacity: 0.9;
+    width: 34%;
+    top: -6%;
+    right: -4%;
+    z-index: 2;
   }
 
   .hero__estrellas {
-    width: 30%;
-    top: 6%;
-    left: 12%;
+    width: 22%;
+    top: 2%;
+    left: -6%;
+    z-index: 2;
   }
 
   .hero__rombos {
-    width: 26%;
-    bottom: 6%;
-    right: 6%;
+    width: 20%;
+    bottom: -4%;
+    right: 4%;
+    z-index: 2;
   }
 
   /* ---------------- Sobre nosotros ---------------- */
@@ -339,6 +415,27 @@ const testimonios = [
     grid-template-columns: 1.2fr 0.8fr;
     gap: clamp(2rem, 5vw, 4rem);
     align-items: start;
+  }
+
+  .sobre-nosotros__lateral {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  /* Marco común de todas las fotos de la agrupación */
+  .foto-marco {
+    margin: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface-sunken);
+  }
+
+  .foto-marco :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .pull-quote {
@@ -393,29 +490,22 @@ const testimonios = [
 
   /* ---------------- Valores ---------------- */
 
-  /* La frase con chips es el patrón de untold.site: los valores viven
-     dentro de la oración, no en tarjetas sueltas. */
-  .valores-frase {
-    font-family: var(--font-subtitle);
-    font-size: clamp(1.35rem, 2.8vw, 2.15rem);
-    line-height: 1.5;
-    max-width: 34ch;
-    color: var(--text-primary);
-    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  .valores-seccion {
+    position: relative;
   }
 
-  .valor-chip {
-    display: inline-block;
-    padding: 0.1em 0.6em;
-    background: var(--accent-energy);
-    color: var(--brand-azul-tinta);
-    border-radius: var(--radius-sm);
-    font-weight: 700;
-    white-space: nowrap;
+  /* Los cuatro círculos alternan color de borde para que la cadena se lea
+     como cuatro piezas distintas y no como una sola forma repetida. */
+  .valores-cadena :global(.valor-circulo:nth-child(3)) {
+    border-color: var(--accent-energy);
   }
 
-  .valor-chip:nth-of-type(2n) {
-    background: var(--brand-celeste);
+  .valores-cadena :global(.valor-circulo:nth-child(4)) {
+    border-color: var(--accent-cool);
+  }
+
+  .valores-cadena :global(.valor-circulo:nth-child(5)) {
+    border-color: var(--brand-celeste);
   }
 
   .valor {
@@ -553,6 +643,27 @@ const testimonios = [
   }
 
   /* ---------------- Eventos / pasos numerados ---------------- */
+
+  .eventos {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .eventos__intro {
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .eventos__intro .section-head {
+    margin-bottom: 0;
+  }
+
+  .eventos__foto {
+    aspect-ratio: 4 / 3;
+  }
 
   .eventos__lista {
     margin-bottom: clamp(3rem, 6vw, 4.5rem);
@@ -754,6 +865,8 @@ const testimonios = [
     opacity: 0.28;
   }
 
+  /* Sobre tinta la línea de marca no se ve; acá va en celeste, que es el
+     color del manual que sí levanta contra el azul profundo. */
   .btn-secondary--inverse {
     color: var(--text-on-ink);
     border-color: rgb(248 244 238 / 0.55);
@@ -787,6 +900,10 @@ const testimonios = [
 
     .pasos {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    .eventos__intro {
+      grid-template-columns: 1fr;
     }
   }
 

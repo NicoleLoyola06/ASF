@@ -528,6 +528,218 @@ p {
   background: var(--accent-soft);
 }
 
+/* --- Línea squiggle (squiggle.sydney) --- */
+
+/* Base de un solo nivel de clase, a propósito: así cualquier regla de
+   página (que Astro sube de especificidad con su atributo de scope) puede
+   reposicionar la línea sin pelearse con estos valores. */
+.squiggle {
+  position: absolute;
+  inset-inline: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Por debajo de 760px no queda margen limpio: la línea pasaría por encima
+   del texto, que es exactamente lo que el manual prohíbe. */
+@media (max-width: 760px) {
+  .squiggle {
+    display: none;
+  }
+}
+
+/* El hero pasa a una sola columna antes que el resto: entre 760 y 900px
+   el texto ya ocupa todo el ancho y no queda banda libre a la derecha. */
+@media (max-width: 900px) {
+  .hero__squiggle,
+  .page-squiggle {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .squiggle {
+    display: none;
+  }
+}
+
+/* --- Línea squiggle de página (squiggle.sydney) --- */
+
+/* Contenedor de los tramos de línea de las páginas interiores. Va detrás
+   de todo el contenido y no intercepta clics; el `overflow: clip` impide
+   que un tramo que se sale por el costado abra scroll horizontal. */
+/* Banda de altura fija sobre la cabecera, no `inset: 0`.
+   Si cubriera toda la página, un mismo porcentaje caería en un sitio
+   distinto en cada página (las hay de 2.300px y de 5.700px) y no habría
+   forma de garantizar que la línea no pise texto. Acotada a la cabecera,
+   el espacio libre es el mismo en las siete páginas: la columna de texto
+   va centrada en 44rem y dejalos dos márgenes laterales despejados. */
+.page-squiggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* 280px: la cabecera más baja de las siete páginas mide 284px
+     (quienes-somos). Cualquier valor mayor se mete en la sección siguiente,
+     donde el contenido ya usa el ancho completo y no quedan márgenes. */
+  height: 280px;
+  overflow: clip;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* El contenido tiene que quedar por encima de la línea */
+main {
+  position: relative;
+}
+
+main > section {
+  position: relative;
+  z-index: 1;
+}
+
+/* ...salvo las secciones con fondo propio, que si suben de capa taparían
+   la línea. Ahí la línea vive dentro de la sección, no detrás. */
+main > .section--ink,
+main > .section--accent,
+main > .section--sunken {
+  z-index: 0;
+}
+
+/* --- Títulos que se escriben (untold.site) --- */
+
+/* El cursor va como pseudo-elemento y no como carácter dentro del texto:
+   si fuera texto, entraría en el aria-label y el lector de pantalla
+   anunciaría un "|" al final de cada titular. */
+[data-typewriter].is-typing::after {
+  content: '';
+  display: inline-block;
+  width: 0.06em;
+  height: 0.82em;
+  margin-left: 0.06em;
+  background: var(--accent-energy);
+  vertical-align: baseline;
+  animation: caret-blink 0.75s step-end infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* --- Cadena de círculos de valores (untold.site) --- */
+
+.valores-cadena {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* El solape es lo que arma la cadena tipo Venn de la referencia */
+  gap: 0;
+  margin-block: clamp(2rem, 5vw, 3.5rem);
+  min-height: clamp(200px, 26vw, 300px);
+}
+
+.valor-circulo {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  width: clamp(150px, 19vw, 240px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  overflow: hidden;
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  will-change: transform;
+}
+
+/* Cada círculo muerde al anterior */
+.valor-circulo + .valor-circulo {
+  margin-left: clamp(-3rem, -3.5vw, -1.5rem);
+}
+
+.valor-circulo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* La foto se atenúa para que el nombre del valor siga siendo legible */
+  opacity: 0.32;
+  filter: grayscale(0.35);
+}
+
+.valor-circulo__label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-subtitle);
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.4vw, 1.25rem);
+  color: var(--text-primary);
+  padding: 0 0.6em;
+  text-shadow: 0 1px 0 var(--surface);
+}
+
+/* Círculos punteados de fondo, como en la referencia */
+.valores-cadena__punteado {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(320px, 46vw, 620px);
+  aspect-ratio: 1;
+  margin: calc(clamp(320px, 46vw, 620px) / -2) 0 0 calc(clamp(320px, 46vw, 620px) / -2);
+  border: 1.5px dashed var(--accent-energy);
+  border-radius: 50%;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.valores-cadena__pie {
+  text-align: center;
+  font-family: var(--font-subtitle);
+  font-size: var(--text-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  max-width: none;
+  margin: 0 0 clamp(3rem, 6vw, 4.5rem);
+}
+
+.valores-cadena__pie strong {
+  color: var(--text-primary);
+}
+
+@media (max-width: 760px) {
+  .valores-cadena {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .valor-circulo {
+    width: clamp(120px, 40vw, 160px);
+  }
+
+  .valor-circulo + .valor-circulo {
+    margin-left: -1rem;
+  }
+
+  .valores-cadena__punteado {
+    display: none;
+  }
+}
+
 /* --- Cursor personalizado --- */
 
 .cursor-dot,
@@ -589,5 +801,20 @@ p {
 
   .section-rule {
     transform: none !important;
+  }
+
+  /* Sin movimiento los círculos quedan donde el flujo los pone, y el
+     cursor de escritura no parpadea. */
+  .valor-circulo {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .valores-cadena__punteado {
+    display: none;
+  }
+
+  [data-typewriter].is-typing::after {
+    animation: none;
   }
 }

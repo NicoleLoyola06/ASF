@@ -1,0 +1,127 @@
+---
+/**
+ * Línea squiggle — referencia: https://www.squiggle.sydney/
+ *
+ * Técnica verificada en el sitio original: la línea es un <path> con
+ * `stroke-dasharray: 0, 999999` que GSAP anima hasta `longitud, 0`. Eso la
+ * "dibuja" progresivamente. En squiggle.sydney el trazo es de 10px con
+ * `stroke-linecap: round`, y cada sección tiene su propio SVG en vez de un
+ * único path gigante — así la línea parece continuar por toda la página
+ * pero cada tramo se posiciona donde conviene.
+ *
+ * modo:
+ *  - "load"  -> se dibuja sola al abrir la página (tramo del hero)
+ *  - "scrub" -> se dibuja atada al scroll (todos los tramos siguientes)
+ *
+ * El color no se pasa por prop: lo hereda de --squiggle-color, que cada
+ * página define en el Layout. Así una página entera cambia de color de
+ * línea tocando un solo valor.
+ */
+/**
+ * La posición va por props y se emite como estilo en línea, no por clases.
+ * Las clases de la página no llegan a este SVG: Astro no propaga su
+ * atributo de scope al interior de un componente hijo, así que las reglas
+ * `.eventos__squiggle { top: ... }` de la página nunca aplicaban y la
+ * línea quedaba a pantalla completa cruzando el texto.
+ *
+ * Con estilo en línea el llamador manda siempre, y cada sección puede
+ * encerrar su línea en la banda que tenga libre.
+ */
+interface Props {
+  variant?: 'entrada' | 'bajada' | 'curva' | 'cierre';
+  mode?: 'load' | 'scrub';
+  class?: string;
+  /** Recorte de la caja del trazo, en cualquier unidad CSS */
+  top?: string;
+  height?: string;
+  left?: string;
+  width?: string;
+  opacity?: number;
+  /** Sobrescribe el color de la página (p. ej. sobre fondo de tinta) */
+  color?: string;
+}
+
+const {
+  variant = 'curva',
+  mode = 'scrub',
+  class: className = '',
+  top = '0',
+  height = '100%',
+  left,
+  width = '100%',
+  opacity = 0.65,
+  color,
+} = Astro.props;
+
+const box = [
+  `top:${top}`,
+  `height:${height}`,
+  left !== undefined ? `left:${left};right:auto` : 'left:0;right:0',
+  `width:${width}`,
+  `opacity:${opacity}`,
+  color ? `--squiggle-color:${color}` : '',
+]
+  .filter(Boolean)
+  .join(';');
+
+/**
+ * Los trazos están dibujados para NO cruzar la columna de texto.
+ *
+ * Con el grid del hero (1.05fr / 0.95fr sobre un wrap de 1280 máx.) la
+ * columna de texto termina cerca de x=745 en unidades del viewBox, así que
+ * "entrada" se mantiene entera por encima de x=760. Es la misma disciplina
+ * que pide el manual: los gráficos acompañan, no se meten en la lectura.
+ */
+const paths: Record<string, string> = {
+  entrada:
+    'M 1520 60 C 1400 120 1240 130 1120 190 C 1000 250 940 340 1010 400 C 1080 460 1200 420 1180 330 C 1160 240 1000 240 900 340 C 800 440 760 600 860 690 C 960 780 1200 760 1420 790',
+  // Desciende pegada al borde derecho, fuera del cuerpo de texto
+  bajada:
+    'M 1380 -40 C 1300 140 1160 240 1120 400 C 1080 560 1220 640 1320 580 C 1420 520 1380 380 1250 400 C 1120 420 1060 560 1100 720 C 1140 880 1280 950 1430 990',
+  // Arco alto que pasa por encima del contenido, no por el medio
+  curva:
+    'M -80 120 C 200 30 460 60 700 120 C 940 180 1120 90 1360 130 C 1500 155 1560 250 1490 340',
+  cierre:
+    'M -60 520 C 160 470 260 330 440 300 C 620 270 720 400 660 490 C 600 580 470 540 500 420 C 530 300 760 220 1000 250 C 1240 280 1370 420 1540 380',
+};
+
+const viewBoxes: Record<string, string> = {
+  entrada: '0 0 1440 820',
+  bajada: '0 0 1440 1000',
+  curva: '0 0 1440 500',
+  cierre: '0 0 1440 620',
+};
+---
+
+<!--
+  preserveAspectRatio="none" hace que el trazo llene exactamente la caja del
+  SVG. Sin eso, el path se escala uniforme y se centra con letterbox, y
+  entonces top/height del CSS no controlan dónde cae la línea de verdad
+  — que es justo lo que hace falta para mantenerla fuera del texto.
+  El grosor no se deforma porque vector-effect lo desacopla de la escala.
+-->
+<svg
+  class={`squiggle squiggle--${variant} ${className}`}
+  style={box}
+  viewBox={viewBoxes[variant]}
+  preserveAspectRatio="none"
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+  data-squiggle={mode}
+>
+  <path
+    d={paths[variant]}
+    stroke="var(--squiggle-color, #ea6d39)"
+    stroke-width="10"
+    stroke-linecap="round"
+    vector-effect="non-scaling-stroke"
+  />
+</svg>
+
+<!--
+  Los estilos base de .squiggle viven en global.css, no acá. Si estuvieran
+  en este <style> scoped tendrían la misma especificidad que las reglas de
+  posición de cada página y ganaría el que quedara último en el bundle:
+  las posiciones ajustadas por sección dejaban de aplicarse sin aviso.
+-->
