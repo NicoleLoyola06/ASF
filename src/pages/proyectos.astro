@@ -1,6 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
+
+// Fotos/Trabajo con adolescentes
+import taller01 from '../assets/fotos/adolescentes/taller-01.jpg';
+import taller02 from '../assets/fotos/adolescentes/taller-02.jpg';
+import taller03 from '../assets/fotos/adolescentes/taller-03.jpg';
+
+const galeria = [
+  { src: taller01, alt: 'Taller de ASF con estudiantes adolescentes en aula' },
+  { src: taller02, alt: 'Facilitadora de ASF durante una dinámica grupal' },
+  { src: taller03, alt: 'Participantes de un taller de ASF trabajando en equipo' },
+];
 
 const proyectos = (await getCollection('proyectos', ({ data }) => data.published)).sort(
   (a, b) => b.data.year.localeCompare(a.data.year)
@@ -43,6 +55,22 @@ const beneficios = [
         ))}
       </div>
     )}
+  </section>
+
+  <!-- Trabajo de campo: las fotos son la evidencia de que esto ya ocurre,
+       aunque los proyectos todavía no estén documentados uno por uno. -->
+  <section class="section wrap galeria-seccion">
+    <div class="section-head" data-reveal>
+      <h2>Trabajo con adolescentes</h2>
+      <p>Así se ven nuestras intervenciones en colegios, universidades y espacios comunitarios.</p>
+    </div>
+    <div class="galeria">
+      {galeria.map((foto) => (
+        <figure class="galeria__item" data-reveal>
+          <Image src={foto.src} alt={foto.alt} widths={[400, 800]} sizes="(max-width: 900px) 90vw, 32vw" loading="lazy" />
+        </figure>
+      ))}
+    </div>
   </section>
 
   <section class="section section--sunken">

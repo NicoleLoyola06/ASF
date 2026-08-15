@@ -1,5 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+// Fotos/Mitos en la adolescencia
+import mito01 from '../assets/fotos/mitos/mito-01.jpg';
+import mito02 from '../assets/fotos/mitos/mito-02.jpg';
+
+const mitos = [
+  { src: mito01, alt: 'Adolescente retratada en un momento cotidiano' },
+  { src: mito02, alt: 'Adolescente estudiando en casa' },
+];
 
 const valores = [
   { label: 'Evidencia', text: 'Todo lo que comunicamos está respaldado por investigación científica y datos reales, no por suposiciones o mitos.' },
@@ -93,6 +103,13 @@ const principios = [
         sujetos de derechos y actores sociales.
       </p>
       <p><strong>Ser adolescente en el Perú es difícil.</strong> Y la falta de comprensión sobre esta etapa lo hace aún más complejo.</p>
+    </div>
+    <div class="problematica__fotos">
+      {mitos.map((foto) => (
+        <figure class="galeria__item" data-reveal>
+          <Image src={foto.src} alt={foto.alt} widths={[380, 760]} sizes="(max-width: 900px) 45vw, 24vw" loading="lazy" />
+        </figure>
+      ))}
     </div>
   </section>
 
@@ -203,8 +220,31 @@ const principios = [
     flex-shrink: 0;
   }
 
+  /* Deja de ser una columna suelta: el texto explica el mito y las fotos
+     muestran adolescencia real al costado, que es justo el contraste que
+     la sección argumenta. */
   .problematica {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: start;
+    max-width: var(--max-width);
+  }
+
+  .problematica > div:first-child {
     max-width: 46rem;
+  }
+
+  .problematica__fotos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  }
+
+  @media (max-width: 900px) {
+    .problematica {
+      grid-template-columns: 1fr;
+    }
   }
 
   .enfoque-item {

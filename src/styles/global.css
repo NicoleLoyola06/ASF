@@ -609,6 +609,76 @@ main > .section--sunken {
   z-index: 0;
 }
 
+/* ---------- Galería de fotos de la agrupación ----------
+   El manual restringe la fotografía a reseñas, convocatorias y cobertura
+   de eventos. Estas galerías son cobertura: gente real de ASF en campo. */
+
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.galeria__item {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-sunken);
+}
+
+.galeria__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.galeria__item:hover img {
+  transform: scale(1.04);
+}
+
+/* La primera foto manda: ocupa dos columnas y fija el ritmo de la grilla */
+.galeria--destacada {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.galeria--destacada .galeria__item:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+@media (max-width: 900px) {
+  .galeria,
+  .galeria--destacada {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .galeria--destacada .galeria__item:first-child {
+    grid-column: span 2;
+    grid-row: auto;
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 560px) {
+  .galeria,
+  .galeria--destacada {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galeria__item img {
+    transition: none;
+  }
+
+  .galeria__item:hover img {
+    transform: none;
+  }
+}
+
 /* --- Títulos que se escriben (untold.site) --- */
 
 /* El cursor va como pseudo-elemento y no como carácter dentro del texto:
