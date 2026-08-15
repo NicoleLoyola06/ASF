@@ -29,25 +29,60 @@
 }
 
 :root {
-  /* Paleta de marca */
-  --color-turquesa: #81c1c3;
-  --color-beige: #e9d2bd;
-  --color-azul-profundo: #007b8c;
-  --color-azul-oscuro: #2f4f6b;
-  --color-fondo: #eeeeee;
+  /* ---------------------------------------------------------------
+     PALETA DE MARCA — los 7 colores del manual, con sus nombres reales.
+     El sitio antes solo usaba beige + celeste + los dos azules, por eso
+     se leía lavado. Naranja y rojo ahora entran como color de energía.
+     --------------------------------------------------------------- */
+  --brand-beige: #e9d2bd;
+  --brand-naranja: #ea6d39;
+  --brand-rojo: #c84744;
+  --brand-turquesa: #007b8c;
+  --brand-celeste: #81c1c3;
+  --brand-azul: #2f4f6b;
+  --brand-fondo: #eeeeee;
 
-  /* Tokens semánticos (light, único tema del sitio) */
-  --surface: #ffffff;
-  --surface-sunken: var(--color-fondo);
-  --surface-accent: var(--color-beige);
-  --text-primary: #1c2b30;
-  --text-secondary: #4a5a5e;
-  --text-on-accent: #ffffff;
-  --border-subtle: #d8d2c8;
-  --accent: var(--color-azul-profundo);
-  --accent-strong: var(--color-azul-oscuro);
-  --accent-soft: var(--color-turquesa);
-  --focus-ring: var(--color-azul-profundo);
+  /* Variantes de trabajo derivadas de la paleta (no son colores nuevos:
+     son el mismo tono llevado a un valor utilizable como fondo o texto). */
+  --brand-azul-tinta: #1e3448; /* azul del manual, más profundo, para bloques grandes */
+  --brand-turquesa-texto: #006b7a; /* turquesa que sí pasa AA sobre papel */
+  --brand-beige-hondo: #ddc4ab;
+
+  /* ---------------------------------------------------------------
+     TOKENS SEMÁNTICOS (tema único, claro pero cálido)
+     El fondo deja de ser blanco/gris frío y pasa a papel cálido: es lo
+     que hace que el beige y el naranja del manual se lean como marca
+     y no como decoración suelta.
+     --------------------------------------------------------------- */
+  --surface: #f8f4ee;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f0e7db;
+  --surface-accent: var(--brand-beige);
+  --surface-ink: var(--brand-azul-tinta);
+
+  --text-primary: #1e3448;
+  --text-secondary: #55697a;
+  --text-on-ink: #f8f4ee;
+  --text-on-ink-soft: rgb(248 244 238 / 0.78);
+
+  --border-subtle: #dccbb6;
+  --border-strong: var(--brand-azul);
+
+  /* Acentos: rojo manda en acción (contraste AA sobre blanco),
+     naranja manda en energía visual (display, números, íconos),
+     turquesa manda en etiquetas y detalles finos. */
+  --accent: var(--brand-rojo);
+  --accent-hover: #b03b38;
+  --accent-energy: var(--brand-naranja);
+  /* El naranja del manual sobre papel da 2.84:1: no llega ni al 3:1 que
+     pide AA para texto grande. Este es el mismo tono bajado en valor, para
+     cuando el naranja tiene que ser TEXTO y no superficie. */
+  --accent-energy-deep: #d0561f;
+  --accent-cool: var(--brand-turquesa);
+  --accent-cool-text: var(--brand-turquesa-texto);
+  --accent-soft: var(--brand-celeste);
+  --accent-strong: var(--brand-azul);
+  --focus-ring: var(--brand-rojo);
 
   /* Tipografía: Marykate para títulos, Glacial Indifference para subtítulos,
      Barlow (Google Fonts, sí disponible) para cuerpo de texto */
@@ -63,19 +98,22 @@
   --text-2xl: 2rem;
   --text-3xl: 2.75rem;
   --text-4xl: 3.5rem;
+  --text-display: clamp(3.5rem, 9vw, 7.5rem);
 
-  /* Radios: sistema all-soft consistente */
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  /* Radios: editorial y firme, no burbuja. Las referencias de marca
+     (untold, vwlab, reform) usan bloques rectos; el pill solo sobrevive
+     en chips y puntos decorativos. */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
   --radius-pill: 999px;
 
   /* Espaciado (density 3, aire editorial) */
   --space-section: clamp(4rem, 8vw, 7rem);
   --space-section-sm: clamp(2.5rem, 5vw, 4rem);
 
-  --shadow-soft: 0 12px 32px -16px rgb(47 79 107 / 0.18);
-  --shadow-lift: 0 20px 48px -20px rgb(47 79 107 / 0.28);
+  --shadow-soft: 0 12px 32px -16px rgb(30 52 72 / 0.22);
+  --shadow-lift: 0 20px 48px -20px rgb(30 52 72 / 0.32);
 
   --max-width: 1280px;
   --nav-height: 76px;

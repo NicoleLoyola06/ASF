@@ -19,17 +19,25 @@ const valores = [
 ];
 
 const servicios = [
-  { label: 'Difusión en redes sociales', text: 'Contenido basado en evidencia para desmontar mitos sobre la adolescencia.', tint: 'beige', featured: true },
-  { label: 'Intervenciones educativas', text: 'Talleres y charlas en colegios y universidades del país.', tint: 'turquesa', featured: false },
-  { label: 'Defensa de derechos humanos', text: 'Participación activa en espacios políticos y comunitarios.', tint: 'turquesa', featured: false },
+  { label: 'Difusión en redes sociales', text: 'Contenido basado en evidencia para desmontar mitos sobre la adolescencia.', tint: 'naranja', featured: true },
+  { label: 'Intervenciones educativas', text: 'Talleres y charlas en colegios y universidades del país.', tint: 'linea', featured: false },
+  { label: 'Defensa de derechos humanos', text: 'Participación activa en espacios políticos y comunitarios.', tint: 'linea', featured: false },
   { label: 'Publicaciones e investigaciones', text: 'Artículos y columnas de opinión con rigor académico.', tint: 'beige', featured: true },
 ];
 
 const impacto = [
-  { label: 'Talleres realizados', value: '40+', icon: '1' },
-  { label: 'Estudiantes alcanzados', value: '2,500+', icon: '2' },
-  { label: 'Instituciones asociadas', value: '15+', icon: '3' },
-  { label: 'Artículos publicados', value: '50+', icon: '4' },
+  { label: 'Talleres realizados', value: '40+', icon: 'estrellas' },
+  { label: 'Estudiantes alcanzados', value: '2,500+', icon: 'rombos' },
+  { label: 'Instituciones asociadas', value: '15+', icon: 'capas' },
+  { label: 'Artículos publicados', value: '50+', icon: 'flecha' },
+];
+
+// Bloque "por qué asistir": los pasos numerados de vwlab.io/pages/showcase
+const razonesAsistir = [
+  { n: '01', label: 'Evidencia, no opinión', text: 'Cada charla parte de investigación revisada, no de anécdotas ni de pánico moral.' },
+  { n: '02', label: 'Diseñado con adolescentes', text: 'Somos estudiantes. El contenido se prueba con la misma edad a la que va dirigido.' },
+  { n: '03', label: 'Adaptado a tu espacio', text: 'Colegio, universidad o comunidad: ajustamos duración, lenguaje y dinámica.' },
+  { n: '04', label: 'Sin costo para la institución', text: 'Nuestro trabajo es voluntario. Lo que pedimos es el espacio y el tiempo.' },
 ];
 
 const testimonios = [
@@ -43,30 +51,29 @@ const testimonios = [
   title="Inicio"
   description="Agrupación estudiantil peruana que desmitifica la adolescencia con evidencia científica, defensa de derechos y acción social."
 >
-  <!-- Hero: asymmetric split, geometric visual (sin fotos, per manual de identidad) -->
-  <section class="hero wrap">
-    <div class="hero__copy" data-reveal>
-      <h1>La adolescencia sin mitos, con evidencia.</h1>
-      <p class="hero__subtext">
-        Somos una agrupación estudiantil peruana dedicada a desmitificar la adolescencia
-        mediante investigación rigurosa, defensa activa de derechos y acción social transformadora.
-        Trabajamos en colegios, universidades y espacios comunitarios para cambiar la narrativa sobre la juventud peruana.
-      </p>
-      <div class="btn-row">
-        <a href="/proyectos" class="btn btn-primary">Conoce nuestros proyectos</a>
-        <a href="/quienes-somos" class="btn btn-secondary">Conoce al equipo</a>
+  <!-- Hero: composición con la iconografía real del kit de marca (sin fotos, per manual) -->
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div class="hero__copy above-marks" data-reveal>
+        <p class="eyebrow">Agrupación estudiantil peruana</p>
+        <h1>La adolescencia sin mitos, con evidencia.</h1>
+        <p class="hero__subtext">
+          Desmitificamos la adolescencia mediante investigación rigurosa, defensa activa de
+          derechos y acción social transformadora. Trabajamos en colegios, universidades y
+          espacios comunitarios para cambiar la narrativa sobre la juventud peruana.
+        </p>
+        <div class="btn-row">
+          <a href="/proyectos" class="btn btn-primary">Conoce nuestros proyectos</a>
+          <a href="/quienes-somos" class="btn btn-secondary">Conoce al equipo</a>
+        </div>
       </div>
-    </div>
-    <div class="hero__visual" aria-hidden="true">
-      <span class="mark-circle hero__c1" style="animation: float 6s ease-in-out infinite;"></span>
-      <span class="mark-circle hero__c2" style="animation: float 8s ease-in-out infinite 0.5s;"></span>
-      <span class="mark-circle hero__c3" style="animation: float 7s ease-in-out infinite 1s;"></span>
-      <svg viewBox="0 0 100 100" class="hero__star" style="animation: rotate 12s linear infinite;">
-        <path
-          d="M50 2 L61 38 L98 38 L68 60 L79 96 L50 74 L21 96 L32 60 L2 38 L39 38 Z"
-          fill="var(--color-azul-profundo)"
-        />
-      </svg>
+
+      <div class="hero__visual" aria-hidden="true">
+        <img src="/images/brand/sol.png" alt="" class="brand-mark hero__sol" data-drift="-14" />
+        <img src="/images/brand/mancha.png" alt="" class="brand-mark brand-mark--blend hero__mancha" data-drift="8" />
+        <img src="/images/brand/estrellas.png" alt="" class="brand-mark brand-mark--blend hero__estrellas" data-drift="-22" />
+        <img src="/images/brand/rombos.png" alt="" class="brand-mark brand-mark--blend hero__rombos" data-drift="18" />
+      </div>
     </div>
   </section>
 
@@ -83,15 +90,16 @@ const testimonios = [
       <a href="/quienes-somos" class="btn btn-secondary">Conoce al equipo</a>
     </div>
     <blockquote class="pull-quote" data-reveal>
-      <span class="pull-quote__accent"></span>
       <p>&ldquo;Ser adolescente en el Perú es difícil. Y la falta de comprensión sobre esta etapa lo hace aún más complejo.&rdquo;</p>
       <cite>— Ideario de Adolescencias Sin Ficciones</cite>
+      <img src="/images/brand/esquina-roja.png" alt="" class="brand-mark pull-quote__esquina" />
     </blockquote>
   </section>
 
-  <!-- Misión: editorial manifesto statement -->
+  <!-- Misión: manifiesto a sangre sobre beige -->
   <section class="section section--accent mision">
-    <div class="wrap" data-reveal>
+    <img src="/images/brand/estrellas.png" alt="" class="brand-mark brand-mark--blend brand-mark--hide-sm mision__marca" data-drift="-18" />
+    <div class="wrap above-marks" data-reveal>
       <p class="eyebrow">Nuestra misión</p>
       <h2 class="mision__statement">
         Desmitificar la adolescencia mediante información basada en evidencia,
@@ -100,15 +108,23 @@ const testimonios = [
     </div>
   </section>
 
-  <!-- Valores: lista de 4, sin card boxes -->
-  <section class="section wrap">
+  <!-- Valores: incrustados dentro de la frase, al modo de untold.site -->
+  <section class="section wrap valores-seccion">
     <div class="section-head" data-reveal>
       <h2>Lo que nos guía</h2>
     </div>
+
+    <p class="valores-frase">
+      Trabajamos con <span class="valor-chip">Evidencia</span>,
+      <span class="valor-chip">Compromiso</span>,
+      <span class="valor-chip">Educación</span> y
+      <span class="valor-chip">Acción</span>. Cada pieza que publicamos pasa por esos cuatro filtros
+      antes de salir.
+    </p>
+
     <div class="grid grid-4 valores">
       {valores.map((valor) => (
         <div class="valor" data-reveal>
-          <span class="mark-circle valor__dot"></span>
           <h3>{valor.label}</h3>
           <p>{valor.text}</p>
         </div>
@@ -116,9 +132,10 @@ const testimonios = [
     </div>
   </section>
 
-  <!-- Qué hacemos: bento con variación de fondo, algunos servicios destacados -->
-  <section class="section section--sunken">
-    <div class="wrap">
+  <!-- Qué hacemos: bloque de tinta, el contrapunto oscuro de la página -->
+  <section class="section section--ink que-hacemos">
+    <img src="/images/brand/esquina-turquesa.png" alt="" class="brand-mark brand-mark--hide-sm que-hacemos__esquina" />
+    <div class="wrap above-marks">
       <div class="section-head" data-reveal>
         <h2>¿Qué hacemos?</h2>
         <p>Nuestro trabajo se organiza en cuatro pilares estratégicos de cambio social y educativo.</p>
@@ -134,7 +151,7 @@ const testimonios = [
     </div>
   </section>
 
-  <!-- Impacto: números con iconos, enfoque visual mejorado -->
+  <!-- Impacto: cifras que cuentan al entrar en pantalla -->
   <section class="section wrap impacto">
     <div class="section-head" data-reveal>
       <h2>Nuestro impacto</h2>
@@ -144,30 +161,25 @@ const testimonios = [
       {impacto.map((item) => (
         <div class="impacto-card" data-reveal>
           <div class="impacto-card__icon">
-            <img src={`/images/icons/${item.icon}.png`} alt={item.label} />
+            <img src={`/images/brand/${item.icon}.png`} alt="" />
           </div>
-          <div class="impacto-card__content">
-            <p class="impacto-card__value">{item.value}</p>
-            <p class="impacto-card__label">{item.label}</p>
-          </div>
+          <p class="impacto-card__value">{item.value}</p>
+          <p class="impacto-card__label">{item.label}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- Eventos destacados -->
-  <section class="section section--sunken">
+  <!-- Eventos: pasos numerados (vwlab.io) en vez de un estado vacío mudo -->
+  <section class="section section--sunken eventos">
     <div class="wrap">
       <div class="section-head" data-reveal>
         <h2>Próximos eventos y actividades</h2>
+        <p>Llevamos charlas e intervenciones a colegios, universidades y espacios comunitarios de todo el país.</p>
       </div>
-      {upcomingEvents.length === 0 ? (
-        <div class="empty-state" data-reveal>
-          <p>Todavía no hay eventos publicados. Estamos preparando las próximas actividades: charlas, intervenciones en colegios y universidades.</p>
-          <a href="/contacto" class="btn btn-secondary">Proponer una actividad</a>
-        </div>
-      ) : (
-        <div class="grid grid-3">
+
+      {upcomingEvents.length > 0 && (
+        <div class="grid grid-3 eventos__lista">
           {upcomingEvents.slice(0, 3).map((event) => (
             <a class="card" href={`/eventos/${event.slug}`} data-reveal>
               <h3>{event.data.title}</h3>
@@ -176,16 +188,37 @@ const testimonios = [
           ))}
         </div>
       )}
+
+      <h3 class="pasos__titulo" data-reveal>¿Por qué invitarnos?</h3>
+      <ol class="pasos">
+        {razonesAsistir.map((razon) => (
+          <li class="paso">
+            <span class="paso__n">{razon.n}</span>
+            <h4>{razon.label}</h4>
+            <p>{razon.text}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="eventos__cta" data-reveal>
+        {upcomingEvents.length === 0 && (
+          <p class="eventos__nota">
+            Todavía no hay fechas publicadas. Estamos coordinando las próximas actividades.
+          </p>
+        )}
+        <a href="/contacto" class="btn btn-energy">Proponer una actividad</a>
+      </div>
     </div>
   </section>
 
   <!-- Artículos destacados -->
-  <section class="section wrap">
-    <div class="section-head" data-reveal>
+  <section class="section wrap articulos-seccion">
+    <img src="/images/brand/rombos.png" alt="" class="brand-mark brand-mark--blend brand-mark--hide-sm articulos__marca" data-drift="-16" />
+    <div class="section-head above-marks" data-reveal>
       <h2>Nuestras publicaciones más recientes</h2>
       <p>Investigación, análisis y evidencia sobre la adolescencia peruana.</p>
     </div>
-    <div class="grid grid-3">
+    <div class="grid grid-3 above-marks">
       {featuredArticles.map((article) => (
         <a class="card article-card" href={`/articulos/${article.slug}`} data-reveal>
           <p class="article-card__category">{article.data.category}</p>
@@ -197,7 +230,7 @@ const testimonios = [
     </div>
   </section>
 
-  <!-- Testimonios: voces reales de impacto -->
+  <!-- Testimonios -->
   <section class="section section--sunken">
     <div class="wrap">
       <div class="section-head" data-reveal>
@@ -219,15 +252,16 @@ const testimonios = [
   </section>
 
   <!-- CTA final -->
-  <section class="section cta-final">
-    <div class="wrap" data-reveal>
+  <section class="section section--ink cta-final">
+    <img src="/images/brand/sol.png" alt="" class="brand-mark cta-final__sol" data-drift="-24" />
+    <div class="wrap above-marks" data-reveal>
       <h2>¿Quieres ser parte del cambio?</h2>
       <p>
         Únete como voluntario, aliado o institución interesada. Juntos podemos
         transformar la manera en que el Perú entiende la adolescencia.
       </p>
       <div class="btn-row">
-        <a href="/contacto" class="btn btn-primary">Únete</a>
+        <a href="/contacto" class="btn btn-energy">Únete</a>
         <a href="/contacto" class="btn btn-secondary btn-secondary--inverse">Contactar a la agrupación</a>
       </div>
     </div>
@@ -235,61 +269,70 @@ const testimonios = [
 </Layout>
 
 <style>
+  /* ---------------- Hero ---------------- */
+
   .hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .hero__inner {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1.05fr 0.95fr;
     align-items: center;
     gap: clamp(2rem, 5vw, 4rem);
-    padding-top: clamp(2.5rem, 6vw, 5rem);
-    padding-bottom: clamp(2.5rem, 6vw, 5rem);
-    min-height: min(80dvh, 640px);
+    padding-top: clamp(3rem, 7vw, 6rem);
+    padding-bottom: clamp(3rem, 7vw, 6rem);
+    min-height: min(84dvh, 700px);
+  }
+
+  .hero__copy h1 {
+    font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+    max-width: 14ch;
+    margin-bottom: 0.4em;
   }
 
   .hero__subtext {
     color: var(--text-secondary);
     font-size: var(--text-lg);
-    max-width: 42ch;
+    max-width: 46ch;
+    margin-bottom: 2rem;
   }
 
   .hero__visual {
     position: relative;
-    height: clamp(260px, 32vw, 420px);
+    height: clamp(300px, 36vw, 480px);
   }
 
-  .hero__c1 {
-    position: absolute;
-    width: 55%;
-    aspect-ratio: 1;
-    background: var(--color-turquesa);
-    top: 8%;
-    right: 8%;
+  /* La composición reproduce el ritmo del kit: una figura grande, dos
+     medianas y un acento, sin que ninguna caiga sobre el texto. */
+  .hero__sol {
+    width: 58%;
+    top: 2%;
+    right: 2%;
   }
 
-  .hero__c2 {
-    position: absolute;
-    width: 32%;
-    aspect-ratio: 1;
-    background: var(--color-beige);
+  .hero__mancha {
+    width: 62%;
+    bottom: 0%;
+    left: -2%;
+    opacity: 0.9;
+  }
+
+  .hero__estrellas {
+    width: 30%;
+    top: 6%;
+    left: 12%;
+  }
+
+  .hero__rombos {
+    width: 26%;
     bottom: 6%;
-    left: 4%;
+    right: 6%;
   }
 
-  .hero__c3 {
-    position: absolute;
-    width: 18%;
-    aspect-ratio: 1;
-    border: 3px solid var(--color-azul-oscuro);
-    background: transparent;
-    top: 4%;
-    left: 20%;
-  }
-
-  .hero__star {
-    position: absolute;
-    width: 20%;
-    bottom: 18%;
-    right: 20%;
-  }
+  /* ---------------- Sobre nosotros ---------------- */
 
   .sobre-nosotros {
     display: grid;
@@ -300,28 +343,18 @@ const testimonios = [
 
   .pull-quote {
     position: relative;
+    overflow: hidden;
     margin: 0;
-    padding: 1.75rem;
-    padding-top: 2.5rem;
-    background: var(--surface-sunken);
+    padding: 2.25rem 1.75rem 1.75rem;
+    background: var(--brand-beige);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
-  }
-
-  .pull-quote__accent {
-    position: absolute;
-    top: 0;
-    left: 1.75rem;
-    width: 48px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-soft) 0%, var(--color-turquesa) 100%);
-    border-radius: var(--radius-sm);
+    border-left: 4px solid var(--accent);
   }
 
   .pull-quote p {
     font-family: var(--font-subtitle);
     font-size: var(--text-lg);
-    color: var(--accent-strong);
+    color: var(--text-primary);
   }
 
   .pull-quote cite {
@@ -330,39 +363,109 @@ const testimonios = [
     font-style: normal;
   }
 
+  .pull-quote__esquina {
+    width: 84px;
+    top: 0;
+    right: 0;
+    opacity: 0.55;
+    mix-blend-mode: multiply;
+    transform: scaleX(-1);
+  }
+
+  /* ---------------- Misión ---------------- */
+
   .mision {
-    text-align: left;
+    position: relative;
+    overflow: hidden;
   }
 
   .mision__statement {
-    max-width: 30ch;
-    font-size: var(--text-3xl);
-    color: var(--accent-strong);
+    max-width: 24ch;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+  }
+
+  .mision__marca {
+    width: clamp(160px, 20vw, 300px);
+    top: -8%;
+    right: 4%;
+    opacity: 0.75;
+  }
+
+  /* ---------------- Valores ---------------- */
+
+  /* La frase con chips es el patrón de untold.site: los valores viven
+     dentro de la oración, no en tarjetas sueltas. */
+  .valores-frase {
+    font-family: var(--font-subtitle);
+    font-size: clamp(1.35rem, 2.8vw, 2.15rem);
+    line-height: 1.5;
+    max-width: 34ch;
+    color: var(--text-primary);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .valor-chip {
+    display: inline-block;
+    padding: 0.1em 0.6em;
+    background: var(--accent-energy);
+    color: var(--brand-azul-tinta);
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .valor-chip:nth-of-type(2n) {
+    background: var(--brand-celeste);
   }
 
   .valor {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--accent-energy);
   }
 
-  .valor__dot {
-    width: 12px;
-    height: 12px;
-    background: var(--accent-soft);
+  .valor h3 {
+    font-size: var(--text-xl);
+    margin-bottom: 0.2em;
+  }
+
+  .valor p {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  /* ---------------- Qué hacemos (bloque de tinta) ---------------- */
+
+  .que-hacemos {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .que-hacemos__esquina {
+    width: clamp(180px, 22vw, 340px);
+    bottom: 0;
+    right: 0;
+    opacity: 0.35;
+    transform: scaleY(-1);
   }
 
   .servicios-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: clamp(1.5rem, 3vw, 2rem);
+    gap: clamp(1.25rem, 2.5vw, 1.75rem);
   }
 
   .servicio {
-    padding: clamp(1.5rem, 3vw, 2rem);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
     border-radius: var(--radius-md);
     height: 100%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
+  }
+
+  .servicio:hover {
+    transform: translateY(-4px);
   }
 
   .servicio--featured {
@@ -376,27 +479,37 @@ const testimonios = [
     font-size: var(--text-2xl);
   }
 
-  .servicio:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lift);
+  /* Sobre tinta, los destacados son bloques de color pleno y los otros
+     dos quedan como contorno: la jerarquía se ve antes de leer. */
+  .servicio--naranja {
+    background: var(--accent-energy);
   }
 
   .servicio--beige {
-    background: var(--color-beige);
+    background: var(--brand-beige);
   }
 
-  .servicio--turquesa {
-    background: color-mix(in srgb, var(--color-turquesa) 35%, white);
+  .servicio--naranja h3,
+  .servicio--naranja p,
+  .servicio--beige h3,
+  .servicio--beige p {
+    color: var(--brand-azul-tinta);
   }
 
-  .servicio h3 {
-    color: var(--accent-strong);
+  .servicio--linea {
+    border: 1.5px solid rgb(248 244 238 / 0.28);
   }
+
+  .servicio--linea h3 {
+    color: var(--brand-celeste);
+  }
+
+  /* ---------------- Impacto ---------------- */
 
   .impacto-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: clamp(2rem, 4vw, 3rem);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
     margin-top: clamp(2rem, 4vw, 3rem);
   }
 
@@ -404,32 +517,31 @@ const testimonios = [
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
-    padding: clamp(1.5rem, 3vw, 2rem);
-    background: var(--surface-sunken);
-    border-radius: var(--radius-md);
-    border-left: 3px solid var(--accent-soft);
+    gap: 0.5rem;
+    padding-top: 1.25rem;
+    border-top: 3px solid var(--accent);
   }
 
   .impacto-card__icon {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 0.5rem;
   }
 
   .impacto-card__icon img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    mix-blend-mode: multiply;
   }
 
+  /* El número es el elemento más grande de la sección: es la evidencia. */
   .impacto-card__value {
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--text-3xl);
-    color: var(--accent-strong);
+    font-size: clamp(2.75rem, 5vw, 4rem);
+    line-height: 1;
+    color: var(--accent-energy-deep);
     font-weight: 700;
   }
 
@@ -438,87 +550,83 @@ const testimonios = [
     font-family: var(--font-subtitle);
     font-size: var(--text-sm);
     color: var(--text-secondary);
-    font-weight: 500;
   }
 
-  .testimonios-grid {
+  /* ---------------- Eventos / pasos numerados ---------------- */
+
+  .eventos__lista {
+    margin-bottom: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .pasos__titulo {
+    font-size: var(--text-xl);
+    color: var(--accent-cool-text);
+    margin-bottom: 1.75rem;
+  }
+
+  .pasos {
+    list-style: none;
+    margin: 0 0 clamp(2.5rem, 5vw, 3.5rem);
+    padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: clamp(2rem, 4vw, 3rem);
-    margin-top: clamp(2rem, 4vw, 3rem);
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
   }
 
-  .testimonio-card {
-    padding: clamp(2rem, 3vw, 2.5rem);
-    background: #ffffff;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border-subtle);
+  .paso {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .testimonio-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lift);
-  }
-
-  .testimonio-card__quote {
-    margin: 0;
-    font-family: var(--font-subtitle);
-    font-size: var(--text-lg);
-    color: var(--accent-strong);
-    font-weight: 500;
-    line-height: 1.6;
-  }
-
-  .testimonio-card__author {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.35rem;
     padding-top: 1rem;
-    border-top: 1px solid var(--border-subtle);
+    border-top: 2px solid var(--border-subtle);
   }
 
-  .testimonio-card__name {
-    margin: 0;
-    font-family: var(--font-subtitle);
+  /* El numeral grande es la señal de secuencia de vwlab.io */
+  .paso__n {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
     font-weight: 700;
-    font-size: var(--text-sm);
-    color: var(--accent-strong);
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
   }
 
-  .testimonio-card__role {
+  .paso h4 {
+    font-family: var(--font-subtitle);
+    font-size: var(--text-base);
     margin: 0;
-    font-size: var(--text-xs);
+  }
+
+  .paso p {
+    margin: 0;
+    font-size: var(--text-sm);
     color: var(--text-secondary);
   }
 
-  .impacto__list {
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .impacto__list p {
-    font-family: var(--font-subtitle);
-    font-weight: 600;
-    color: var(--accent-strong);
-    border-top: 2px solid var(--border-subtle);
-    padding-top: 1rem;
-    margin: 0;
-  }
-
-  .empty-state {
+  .eventos__cta {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
     align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .eventos__nota {
+    color: var(--text-secondary);
+    margin: 0;
     max-width: 48ch;
   }
 
-  .empty-state p {
-    color: var(--text-secondary);
+  /* ---------------- Artículos ---------------- */
+
+  .articulos-seccion {
+    position: relative;
+  }
+
+  .articulos__marca {
+    width: clamp(140px, 16vw, 240px);
+    top: 8%;
+    right: -2%;
+    opacity: 0.5;
   }
 
   .article-card {
@@ -527,7 +635,8 @@ const testimonios = [
     gap: 0.5rem;
     text-decoration: none;
     color: var(--text-primary);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-top: 3px solid var(--accent-energy);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
 
   .article-card:hover {
@@ -539,26 +648,91 @@ const testimonios = [
     font-family: var(--font-subtitle);
     font-size: var(--text-xs);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent);
+    letter-spacing: 0.1em;
+    color: var(--accent-cool-text);
     margin: 0;
+  }
+
+  .article-card h3 {
+    font-size: var(--text-xl);
   }
 
   .article-card__author {
     margin-top: auto;
+    padding-top: 0.75rem;
     font-size: var(--text-xs);
     color: var(--text-secondary);
   }
 
-  .cta-final {
-    background: var(--accent-strong);
-    color: #ffffff;
-    text-align: center;
+  /* ---------------- Testimonios ---------------- */
+
+  .testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
   }
 
-  .cta-final h2,
-  .cta-final p {
-    color: #ffffff;
+  .testimonio-card {
+    padding: clamp(1.75rem, 3vw, 2.25rem);
+    background: var(--surface-raised);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--brand-celeste);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .testimonio-card:nth-child(2) {
+    border-left-color: var(--accent-energy);
+  }
+
+  .testimonio-card:nth-child(3) {
+    border-left-color: var(--accent);
+  }
+
+  .testimonio-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .testimonio-card__quote {
+    margin: 0;
+    font-family: var(--font-subtitle);
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+    line-height: 1.55;
+  }
+
+  .testimonio-card__author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .testimonio-card__name {
+    margin: 0;
+    font-family: var(--font-subtitle);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+  }
+
+  .testimonio-card__role {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+  }
+
+  /* ---------------- CTA final ---------------- */
+
+  .cta-final {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
   }
 
   .cta-final .wrap {
@@ -567,57 +741,40 @@ const testimonios = [
 
   .cta-final p {
     margin-inline: auto;
-    color: rgb(255 255 255 / 0.85);
   }
 
   .cta-final .btn-row {
     justify-content: center;
   }
 
+  .cta-final__sol {
+    width: clamp(200px, 26vw, 380px);
+    top: -18%;
+    left: -6%;
+    opacity: 0.28;
+  }
+
   .btn-secondary--inverse {
-    color: #ffffff;
-    border-color: rgb(255 255 255 / 0.6);
+    color: var(--text-on-ink);
+    border-color: rgb(248 244 238 / 0.55);
   }
 
   .btn-secondary--inverse:hover {
-    background: #ffffff;
-    color: var(--accent-strong);
+    background: var(--text-on-ink);
+    color: var(--brand-azul-tinta);
   }
 
-  /* Animaciones */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    [style*="animation"] {
-      animation: none !important;
-    }
-  }
+  /* ---------------- Responsive ---------------- */
 
   @media (max-width: 900px) {
-    .hero,
+    .hero__inner,
     .sobre-nosotros {
       grid-template-columns: 1fr;
     }
 
     .hero__visual {
       order: -1;
-      height: 220px;
+      height: 240px;
     }
 
     .servicios-grid {
@@ -626,6 +783,16 @@ const testimonios = [
 
     .servicio--featured {
       grid-row: span 1;
+    }
+
+    .pasos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .pasos {
+      grid-template-columns: 1fr;
     }
   }
 </style>

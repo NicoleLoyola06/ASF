@@ -99,15 +99,21 @@ function pageOpen(): gsap.core.Timeline {
 
   const mark = document.createElement('span');
   mark.className = 'page-curtain__mark';
+
+  // El sol naranja del kit de marca: la apertura ya es ASF, no un punto genérico.
+  const img = document.createElement('img');
+  img.src = '/images/brand/sol.png';
+  img.alt = '';
+  mark.appendChild(img);
   curtain.appendChild(mark);
 
   document.body.appendChild(curtain);
 
   const tl = gsap.timeline();
 
-  // El punto turquesa crece, y la cortina sube revelando la página
-  tl.to(mark, { scale: 1, opacity: 1, duration: 0.45, ease: 'power2.out' })
-    .to(mark, { scale: 0.2, opacity: 0, duration: 0.3, ease: 'power2.in' }, '+=0.1')
+  // El sol crece girando, y la cortina sube revelando la página
+  tl.to(mark, { scale: 1, opacity: 1, rotate: 90, duration: 0.55, ease: 'power2.out' })
+    .to(mark, { scale: 0.2, opacity: 0, rotate: 180, duration: 0.3, ease: 'power2.in' }, '+=0.1')
     .to(curtain, {
       yPercent: -100,
       duration: 0.8,
@@ -266,6 +272,70 @@ function articlesScrollShift() {
 }
 
 /* ------------------------------------------------------------------ */
+/* 7b. Deriva de la iconografía de marca  (giannantoniodemalde.com)     */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Las estrellas, rombos y manchas del kit se mueven a distinta velocidad
+ * que el texto al hacer scroll. Es lo que da profundidad sin fotos, que es
+ * justo la restricción del manual (fotos solo en reseñas, convocatorias
+ * y cobertura de eventos).
+ *
+ * La velocidad de cada marca se declara en el markup con data-drift.
+ */
+function driftBrandMarks() {
+  const marks = document.querySelectorAll<HTMLElement>('.brand-mark[data-drift]');
+
+  marks.forEach((mark) => {
+    const drift = parseFloat(mark.dataset.drift || '0');
+    if (!drift) return;
+
+    const section = mark.closest('section') || (mark.parentElement as HTMLElement);
+
+    gsap.to(mark, {
+      yPercent: drift,
+      rotate: drift * 0.35,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 0.8,
+      },
+    });
+  });
+}
+
+/* ------------------------------------------------------------------ */
+/* 7c. Chips de valores dentro del párrafo  (untold.site "brands")      */
+/* ------------------------------------------------------------------ */
+
+/**
+ * En untold.site los logos de clientes viven dentro de una frase corrida,
+ * entre paréntesis. Acá los valores de ASF entran igual: no como tarjetas
+ * sueltas sino incrustados en la oración, apareciendo uno por uno.
+ */
+function revealValueChips() {
+  const chips = document.querySelectorAll<HTMLElement>('.valor-chip');
+  if (!chips.length) return;
+
+  gsap.set(chips, { scale: 0.6, opacity: 0 });
+
+  gsap.to(chips, {
+    scale: 1,
+    opacity: 1,
+    duration: 0.55,
+    ease: 'back.out(1.7)',
+    stagger: 0.11,
+    scrollTrigger: {
+      trigger: chips[0].closest('.valores-frase') || chips[0],
+      start: 'top 80%',
+      once: true,
+    },
+  });
+}
+
+/* ------------------------------------------------------------------ */
 /* 8. Cursor con lag  (untold.site)                                     */
 /* ------------------------------------------------------------------ */
 
@@ -371,8 +441,11 @@ export function initAllAnimations() {
   staggerBlocks('.servicio');
   staggerBlocks('.impacto-card');
   staggerBlocks('.testimonio-card');
+  staggerBlocks('.paso');
   impactCounters();
   articlesScrollShift();
+  driftBrandMarks();
+  revealValueChips();
   customCursor();
 
   ScrollTrigger.refresh();

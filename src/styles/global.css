@@ -54,7 +54,7 @@ h4 {
   line-height: 1.08;
   letter-spacing: -0.01em;
   margin: 0 0 0.5em;
-  color: var(--accent-strong);
+  color: var(--text-primary);
 }
 
 h1 {
@@ -102,6 +102,21 @@ p {
   background: var(--surface-accent);
 }
 
+/* Bloque de tinta: el contrapunto oscuro que le faltaba al sitio.
+   Una página que solo alterna papel/beige/gris se lee lavada; el azul
+   profundo a sangre completa es lo que hace que el resto respire. */
+.section--ink {
+  background: var(--surface-ink);
+  color: var(--text-on-ink);
+}
+
+.section--ink h1,
+.section--ink h2,
+.section--ink h3,
+.section--ink h4 {
+  color: var(--text-on-ink);
+}
+
 .section-head {
   max-width: 44rem;
   margin-bottom: clamp(2rem, 4vw, 3.5rem);
@@ -117,26 +132,48 @@ p {
   text-align: center;
 }
 
+/* Sobre tinta el texto secundario tiene que subir de valor: el gris de
+   párrafo sobre papel cae a 2.2:1 contra el azul profundo. Va después de
+   .section-head p a propósito, para ganarle en el orden de cascada. */
+.section--ink .section-head p,
+.section--ink p {
+  color: var(--text-on-ink-soft);
+}
+
 /* ---------- Eyebrow (used sparingly, max 1 per 3 sections) ---------- */
 
+/* Etiqueta entre paréntesis, tomada de untold.site: marca la entrada de
+   una sección sin competir con el título. El paréntesis va en naranja y
+   el texto en turquesa oscuro, que sí cumple contraste sobre papel. */
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
   font-family: var(--font-subtitle);
+  font-weight: 700;
   font-size: var(--text-xs);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.75em;
+  color: var(--accent-cool-text);
+  margin-bottom: 0.9em;
 }
 
 .eyebrow::before {
-  content: '';
-  width: 0.5em;
-  height: 0.5em;
-  border-radius: 50%;
-  background: var(--accent-soft);
+  content: '(';
+  color: var(--accent-energy);
+  font-size: 1.15em;
+  line-height: 1;
+}
+
+.eyebrow::after {
+  content: ')';
+  color: var(--accent-energy);
+  font-size: 1.15em;
+  line-height: 1;
+}
+
+.section--ink .eyebrow {
+  color: var(--accent-soft);
 }
 
 /* ---------- Buttons ---------- */
@@ -150,13 +187,28 @@ p {
   font-weight: 700;
   font-size: var(--text-sm);
   letter-spacing: 0.01em;
-  padding: 0.9em 1.75em;
-  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 1em 1.9em;
+  border-radius: var(--radius-sm);
   border: 2px solid transparent;
   white-space: nowrap;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* El punto delante del label es el tic de untold.site: da ritmo al botón
+   sin necesidad de un icono. */
+.btn::before {
+  content: '';
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.75;
+  flex-shrink: 0;
 }
 
 .btn:active {
@@ -166,25 +218,37 @@ p {
 .btn-primary {
   background: var(--accent);
   color: #ffffff;
-  box-shadow: var(--shadow-soft);
 }
 
 .btn-primary:hover {
-  background: var(--accent-strong);
+  background: var(--accent-hover);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lift);
 }
 
 .btn-secondary {
   background: transparent;
-  color: var(--accent-strong);
-  border-color: var(--accent-strong);
+  color: var(--text-primary);
+  border-color: var(--text-primary);
 }
 
 .btn-secondary:hover {
-  background: var(--accent-strong);
-  color: #ffffff;
+  background: var(--text-primary);
+  color: var(--surface);
   transform: translateY(-2px);
+}
+
+/* Botón de energía: naranja pleno con tinta encima. El naranja del manual
+   no alcanza contraste AA con blanco, así que el texto va en azul profundo. */
+.btn-energy {
+  background: var(--accent-energy);
+  color: var(--brand-azul-tinta);
+}
+
+.btn-energy:hover {
+  background: #d85f2c;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
 }
 
 .btn-row {
@@ -196,7 +260,7 @@ p {
 /* ---------- Cards (used only where elevation communicates hierarchy) ---------- */
 
 .card {
-  background: var(--surface);
+  background: var(--surface-raised);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
   padding: clamp(1.5rem, 3vw, 2rem);
@@ -241,6 +305,75 @@ p {
 .mark-circle {
   border-radius: 50%;
   flex-shrink: 0;
+}
+
+/* ---------- Iconografía de marca (Brand/Íconos) ----------
+   El manual pide "figuras geométricas circulares y estrellas dibujadas"
+   y fija la regla de oro: los íconos acompañan, no compiten. Por eso todos
+   son decorativos (aria-hidden), nunca cargan significado y nunca se
+   interponen en el flujo de lectura. */
+
+.brand-mark {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  object-fit: contain;
+}
+
+/* Los íconos vienen en PNG sobre blanco: multiply los integra al papel
+   cálido y al beige sin recortar el fondo a mano. */
+.brand-mark--blend {
+  mix-blend-mode: multiply;
+}
+
+.brand-mark--soft {
+  opacity: 0.5;
+}
+
+/* Contenido por encima de cualquier marca decorativa */
+.above-marks {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 700px) {
+  /* En móvil el ancho no alcanza para que decoren sin estorbar */
+  .brand-mark--hide-sm {
+    display: none;
+  }
+}
+
+/* Marca del kit en la cabecera de las páginas interiores. Va como
+   pseudo-elemento y no como <img> porque es puramente decorativa: así
+   ninguna página tiene que declararla en su markup y el lector de
+   pantalla nunca la encuentra. overflow:hidden evita que asome fuera
+   del viewport y dispare scroll horizontal. */
+.page-head {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Va anclada al aire que deja el padding superior de la sección, nunca
+   al costado del texto: el manual prohíbe expresamente meter gráficos en
+   medio del flujo de lectura. */
+.page-head::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(70px, 8vw, 104px);
+  aspect-ratio: 1;
+  background: url('/images/brand/estrellas.png') no-repeat center / contain;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .page-head::after {
+    display: none;
+  }
 }
 
 /* ---------- Reveal on scroll (motion intensity 4, respects reduced motion) ---------- */
@@ -366,23 +499,33 @@ p {
 }
 
 .page-curtain__mark {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: var(--color-turquesa);
+  width: 88px;
+  height: 88px;
   opacity: 0;
   transform: scale(0.2);
+}
+
+/* El sol naranja del kit de marca abre la página, en vez de un círculo
+   genérico: la primera cosa que ve el visitante ya es ASF. */
+.page-curtain__mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* --- Línea que se traza bajo los títulos de sección --- */
 
 .section-rule {
   display: block;
-  width: 72px;
-  height: 2px;
+  width: 96px;
+  height: 3px;
   margin-bottom: 1.25rem;
-  background: var(--color-turquesa);
+  background: var(--accent-energy);
   will-change: transform;
+}
+
+.section--ink .section-rule {
+  background: var(--accent-soft);
 }
 
 /* --- Cursor personalizado --- */
@@ -403,7 +546,7 @@ p {
 .cursor-dot {
   width: 8px;
   height: 8px;
-  background: var(--accent);
+  background: var(--accent-energy);
 }
 
 .cursor-ring {
@@ -412,7 +555,7 @@ p {
   margin-top: -20px;
   margin-left: -20px;
   border: 1.5px solid var(--accent);
-  opacity: 0.25;
+  opacity: 0.35;
   will-change: transform;
 }
 
